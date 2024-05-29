@@ -1,0 +1,58 @@
+
+
+
+
+    //TODO: Diferenciar funcionarios em tipos **Funcionario,Dono,Compras
+    //TODO: Criar classe setor.
+    //TODO: Arrumar cadastro funcionario na parte da escolha do setor
+    //TODO: Tenho que fazer a verificação de todas as entradas do programa
+
+    //FIXME: Arrumar a id na hora do cadastro de funcinario
+    //FIXME: No cadastro de funcionario no memento de escolha do tipo de funcionario, next().nextCharAt(0) pode causar comportamento indefinido.
+
+    //TODO: Acho que não precisasamos guardar o idCliente no pedidoDePersonalização, ja que o veiculoJa possui essa informaçãoe é possivel associar as duas tabelas
+            |-> Removi o idCliente do pedido de personalização ***Atualizar diagrama kkkk
+
+
+    //FIXME: Adicionei um novo campo tipo para os departamentos, o campo tipo indica se o departamento é de compras ou de veiculos
+            |-> V - veiculos
+            |-> C - Compras
+            |-> D - Dono
+            | --- Na hora da criação do banco é importate lembrar de criar o departamento dono com id 0 e departamento compras com id 1
+
+
+    //TODO: Na especificação do tema está escrito:Cada departamento mantém uma lista de componentes a serem
+                                                  utilizados para cada tipo de veículo a ser personalizado'
+                                                  Nao sei como isso poderia ser implementado
+
+
+    //TODO:Especificar tipo do componente/produto
+
+    //FIXME: Fiz uma alteração na calsse Produto, adicionei um campo descrição.
+        Esse campo deve ser responsavel por fornecer as decrições de peças especificas
+        O tipo agora nas peças indica se a peça é especial ou comum.
+        Peças especiais tem descrição != null
+
+
+    Mecanico cria notificacao -> Compras vizualização notificações
+                                 Cria pedidos de compra
+                                 Conclui compras adicionando peças ao estoque
+    /*
+
+    -- Fiz uma alteração na classe dos funcionarios. Agora funcionarios tem um tipo, podendo ser
+    -- "D" -> Dono ->Esse funcionarios tem mais permissoes no nosso programa
+    -- "C" -> Compras    }|
+    -- "M" -> Mecanico   }|
+                          |------> Esses funcionario tem acesso as funcções de seu interesse
+
+    Dono    -> Pode fazer tudo
+    Compras -> Tem acesso ao estoque e a parte de compra de peças faz os pedidos e confirma as entregasç
+    Mecanico    -> Tem acesso ao estoque e aos pedidos de personalização
+    Talvez fazer uma modificação inserindo uma senha???
+
+
+
+    //TODO: Acredito que a verificação da quantidade mimima poça ser feita com uma função ou trigger
+    //TODO: Adicionar
+
+    */
