@@ -6,12 +6,29 @@ public class Produto {
     private String nome;
     private double precoPorUnidade;
 
+    private int quantidadeEstoque;
     private int fornecedorPrincipal;
     private char tipo; //Fundamental ou especifico
     private int quantidadeMinima;
 
     private String descricao;
 
+
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
     public int getIdProduto() {
         return idProduto;

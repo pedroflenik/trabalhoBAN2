@@ -45,6 +45,8 @@ public class Main {
         novoProduto.setQuantidadeMinima(scan.nextInt());
         System.out.println("Escolha um fornecedor principal para o produto:");
         mostraFornecedores();
+        System.out.println("Insira a quantidade atual do produto em estoque:");
+        novoProduto.setQuantidadeEstoque(scan.nextInt());
         novoProduto.setFornecedorPrincipal(scan.nextInt());
 
         return novoProduto;
@@ -441,7 +443,7 @@ public class Main {
                 case 4:
                     sistema.cadastrarPedidoCompra(cadastroPedidoCompra());
                 case 5:
-                    System.out.println("Saindo...");//TODO:Adicionar pedido de compra
+                    System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Opção inválida.");
