@@ -22,6 +22,19 @@ public class Main {
         return novaNotificao;
     }
 
+
+
+    public static void  confirmarEntregaProduto(){
+        List<PedidoCompra> pedidos = sistema.getPedidosCompra();
+        int escolha = 0;
+        System.out.println("Escolha um pedido para confirmar a entrega:");
+        mostrarPedidosCompra();
+        escolha = scan.nextInt();
+
+        pedidos.get(escolha - 1).setEntregue(true);
+
+    }
+
     public static PedidoCompra  cadastroPedidoCompra(){
         PedidoCompra novoPedidoCompra = new PedidoCompra();
         System.out.println("Escolha uma notificação:");
@@ -191,7 +204,7 @@ public class Main {
     public static void menuCadastro(){
         int opcao = 0;
 
-        while(opcao != 3){
+        while(opcao != 2){
             System.out.println("Escolha uma opção:");
             System.out.println("1 - Cadastrar Funcionario");
             System.out.println("2 - Voltar");
@@ -288,7 +301,7 @@ public class Main {
     public static void menuMecanico(Funcionario funcinarioAtivo){
         int opcao = 0;
         Scanner scan = new Scanner(System.in);
-        while(opcao != 5){ // Ajustei o número da opção de "Sair"
+        while(opcao != 4){ // Ajustei o número da opção de "Sair"
             System.out.println("Escolha uma opção:");
             System.out.println("1 - Cadastra Notificação");
             System.out.println("2 - Cadastra Notificação");
@@ -307,10 +320,6 @@ public class Main {
                     consutarEstoqueProdutos();
                     break;
                 case 4:
-                    // Opção 4 - Consultar
-                    //consultar();
-                    break;
-                case 5:
                     System.out.println("Saindo...");
                     break;
                 default:
@@ -323,29 +332,25 @@ public class Main {
     public static void menuCompras(Funcionario funcinarioAtivo){
         int opcao = 0;
         Scanner scan = new Scanner(System.in);
-        while(opcao != 5){ // Ajustei o número da opção de "Sair"
+        while(opcao != 4){ // Ajustei o número da opção de "Sair"
             System.out.println("Escolha uma opção:");
-            System.out.println("1 - Cadastro de Clientes, Veículos e Pedidos de Personalização");
+            System.out.println("1 - Cadastro Pedido de compra");
             System.out.println("2 - Cadastra Notificação");
-            System.out.println("3 - Consultar estoque");
+            System.out.println("3 - Consulta");
             System.out.println("4 - Sair");
             opcao = scan.nextInt();
 
             switch (opcao){
                 case 1:
-                    menuCadastroRClientes();
+                    sistema.cadastrarPedidoCompra(cadastroPedidoCompra());
                     break;
                 case 2:
                     sistema.cadastrarNotificacao(cadastroNotificacao());
                     break;
                 case 3:
-                    //TODO: Consuta do estoque, no momento o produto não possui uma quantidade associdda, tenho que mudar isso
+                    menuConsultaCompras();
                     break;
                 case 4:
-                    // Opção 4 - Consultar
-                    //consultar();
-                    break;
-                case 5:
                     System.out.println("Saindo...");
                     break;
                 default:
@@ -421,7 +426,7 @@ public class Main {
     public static void menuCadastroRProdutos(){// 3 - Cadastro de Produtos, Fornecedores e Notificações
         int opcao = 0;
         Scanner scan = new Scanner(System.in);
-        while(opcao != 3){
+        while(opcao != 5){
             System.out.println("Escolha uma opção:");
             System.out.println("1 - Cadastrar produto");
             System.out.println("2 - Cadastrar fornecedor");
@@ -451,6 +456,37 @@ public class Main {
             }
         }
     }
+
+    public static void menuConsultaCompras(){// 3 - Cadastro de Produtos, Fornecedores e Notificações
+        int opcao = 0;
+        Scanner scan = new Scanner(System.in);
+        while(opcao != 4){
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Mostrar notificacoes");
+            System.out.println("2 - Mostrar pedidos compra");
+            System.out.println("3 - Confirmar entrega");
+            System.out.println("4 - Sair");
+            opcao = scan.nextInt();
+
+            switch (opcao){
+                case 1:
+                    mostraNotificacoes();
+                    break;
+                case 2:
+                    mostrarPedidosCompra();
+                    break;
+                case 3:
+                    confirmarEntregaProduto();
+                case 4:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        }
+    }
+
 
     //********************************************************************
     public static  void mostraMenuInicial(){
@@ -528,6 +564,15 @@ public class Main {
                     d.getIdDep() + " - Nome: " + d.getNome() + " Tipo veiculo: " + d.getTipoVeiculo()
                 );
             }
+        }
+    }
+
+    public static void mostrarPedidosCompra(){
+        List<PedidoCompra> pedidosCompra = sistema.getPedidosCompra();
+        for(PedidoCompra pd : pedidosCompra){
+                System.out.println(
+                       pd.getIdPedidoCompra() + " - " + "Número produto: " + pd.getIdProduto() + " Quantidade: " + pd.getQuantidade() + " Valor: " + pd.getTotalCompra()
+                );
         }
     }
 

@@ -116,6 +116,7 @@ public class Sistema {
         Notificacao notificacaoAssociada = procuraNotificacao(novoPedidoCompra.getIdNotificacao());
         Produto produtoAssociado = procuraProduto(notificacaoAssociada.getIdProduto());
 
+        novoPedidoCompra.setEntregue(false);
         novoPedidoCompra.setIdProduto(produtoAssociado.getIdProduto());
         novoPedidoCompra.setQuantidade(notificacaoAssociada.getQuantidade());
         novoPedidoCompra.setTotalCompra(produtoAssociado.getPrecoPorUnidade() * notificacaoAssociada.getQuantidade());

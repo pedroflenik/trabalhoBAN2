@@ -12,6 +12,15 @@ public class PedidoCompra {
 
     private int idProduto;
 
+    private boolean entregue;
+
+    public boolean isEntregue() {
+        return entregue;
+    }
+
+    public void setEntregue(boolean entrege) {
+        this.entregue = entrege;
+    }
 
     public int getIdNotificacao() {
         return idNotificacao;
