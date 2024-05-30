@@ -15,8 +15,10 @@ public class Main {
         System.out.println("Escolha um produto:");
         mostraProdutos();
         novaNotificao.setIdProduto(scan.nextInt());
+        scan.nextLine();
         System.out.println("Insira a quantidade");
         novaNotificao.setQuantidade(scan.nextInt());
+        scan.nextLine();
         novaNotificao.setDataLimite(pegaData("Insira a data limite"));
 
         return novaNotificao;
@@ -30,6 +32,7 @@ public class Main {
         System.out.println("Escolha um pedido para confirmar a entrega:");
         mostrarPedidosCompra();
         escolha = scan.nextInt();
+        scan.nextLine();
 
         pedidos.get(escolha - 1).setEntregue(true);
 
@@ -40,6 +43,7 @@ public class Main {
         System.out.println("Escolha uma notificação:");
         mostraNotificacoes();
         novoPedidoCompra.setIdNotificacao(scan.nextInt());
+        scan.nextLine();
 
         return novoPedidoCompra;
     }
@@ -56,11 +60,14 @@ public class Main {
         novoProduto.setTipo(scan.next().charAt(0));
         System.out.println("Insira a quantidade mimima que deve existir do produto em estoque:");
         novoProduto.setQuantidadeMinima(scan.nextInt());
+        scan.nextLine();
         System.out.println("Escolha um fornecedor principal para o produto:");
         mostraFornecedores();
         System.out.println("Insira a quantidade atual do produto em estoque:");
         novoProduto.setQuantidadeEstoque(scan.nextInt());
+        scan.nextLine();
         novoProduto.setFornecedorPrincipal(scan.nextInt());
+        scan.nextLine();
 
         return novoProduto;
     }
@@ -99,7 +106,8 @@ public class Main {
         System.out.println("Escolha o cliente dono do veiculo:");
          mostraClientes();
         novoVeiculo.setIdDono(scan.nextInt());
-
+        scan.nextLine();
+        scan.nextLine();
         return novoVeiculo;
     }
     public static Cliente cadastroCliente(){
@@ -124,9 +132,11 @@ public class Main {
         System.out.println("Escolha um veiculo:");
         mostraVeiculos();
         novoPedidoPersonalizacao.setIdVeiculo(scan.nextInt());
+        scan.nextLine();
         System.out.println("Escolha o departamento responsável:");
         mostraDepartamentosV();
         novoPedidoPersonalizacao.setDepartamentoResponsavel(scan.nextInt());
+        scan.nextLine();
 
 
         return novoPedidoPersonalizacao;
@@ -168,9 +178,16 @@ public class Main {
                 novoFuncionario.setIdDepartamento(1);
                 break;
             case 'M':
-                System.out.println("Escolha um departamento para o funcionario:");
-                mostraDepartamentosV();
+                if(sistema.getDepartamentos().size() == 2){
+                    System.out.println("Cadastre um departamento para mecanicos antes de cadastrar um funcionario");
+                    return null;
+                }else{
+                    System.out.println("Escolha um departamento para o funcionario:");
+                    mostraDepartamentosV();
+                }
+
                 novoFuncionario.setIdDepartamento(scan.nextInt());
+                scan.nextLine();
                 break;
         }
 
@@ -184,10 +201,13 @@ public class Main {
             System.out.println(msg);
             System.out.println("Insira o dia:");
             int dia = scan.nextInt();
+            scan.nextLine();
             System.out.println("Insira o mês:");
             int mes = scan.nextInt();
+            scan.nextLine();
             System.out.println("Insira o ano:");
             int ano = scan.nextInt();
+            scan.nextLine();
 
             try {
                 data = LocalDate.of(ano, mes, dia);
@@ -209,6 +229,7 @@ public class Main {
             System.out.println("1 - Cadastrar Funcionario");
             System.out.println("2 - Voltar");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
@@ -270,6 +291,7 @@ public class Main {
             System.out.println("4 - Consultar");
             System.out.println("5 - Sair");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
@@ -303,11 +325,12 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         while(opcao != 4){ // Ajustei o número da opção de "Sair"
             System.out.println("Escolha uma opção:");
-            System.out.println("1 - Cadastra Notificação");
+            System.out.println("1 - Cadastro de Clientes, Veículos e Pedidos de Personalização");
             System.out.println("2 - Cadastra Notificação");
             System.out.println("3 - Consultar estoque peças");
             System.out.println("4 - Sair");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
@@ -339,6 +362,7 @@ public class Main {
             System.out.println("3 - Consulta");
             System.out.println("4 - Sair");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
@@ -371,6 +395,7 @@ public class Main {
             System.out.println("3 - Cadastrar pedido de personalização");
             System.out.println("4 - Sair");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
@@ -402,11 +427,14 @@ public class Main {
             System.out.println("2 - Cadastrar setor");
             System.out.println("3 - Sair");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
                     // Opção 1 - Cadastro de Funcionario,
-                    sistema.cadastraFuncionario(cadastroFuncionario());
+                    if(sistema.cadastraFuncionario(cadastroFuncionario()) == 1){
+                        System.out.println("ERRO: Falha ao cadastrar funcionário");
+                    };
                     break;
                 case 2:
                     // Opção 2 - Departamentos
@@ -434,6 +462,7 @@ public class Main {
             System.out.println("4 - Cadastrar pedido compra");
             System.out.println("5 - Sair");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
@@ -467,6 +496,7 @@ public class Main {
             System.out.println("3 - Confirmar entrega");
             System.out.println("4 - Sair");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
@@ -498,10 +528,13 @@ public class Main {
             System.out.println("2 - Login");
             System.out.println("3 - Sair");
             opcao = scan.nextInt();
+            scan.nextLine();
 
             switch (opcao){
                 case 1:
-                    sistema.cadastraFuncionario(cadastroAministrador());
+                    if(sistema.cadastraFuncionario(cadastroAministrador()) == 1){
+                        System.out.println("ERRO: Falha ao cadastrar funcionário");
+                    };
                     break;
                 case 2:
                     menuLogin();
@@ -567,6 +600,7 @@ public class Main {
         }
     }
 
+
     public static void mostrarPedidosCompra(){
         List<PedidoCompra> pedidosCompra = sistema.getPedidosCompra();
         for(PedidoCompra pd : pedidosCompra){
@@ -595,7 +629,7 @@ public class Main {
     }
 
     //********************************************************************
-
+    //TODO: Precisa adicionar a possibilidade de deletar as coisas
     public static void main(String[] args) {
         Departamento depInicial = new Departamento();
         depInicial.setIdDep(0);

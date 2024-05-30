@@ -156,6 +156,9 @@ public class Sistema {
         return 0;
     }
     public int cadastraFuncionario(Funcionario novoFuncionario) {
+        if(novoFuncionario == null){
+            return 1;
+        }
         novoFuncionario.setIdFuncionario(funcionarios.size() + 1);
         funcionarios.add(novoFuncionario);
         return 0;

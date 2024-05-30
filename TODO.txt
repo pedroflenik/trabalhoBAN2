@@ -53,6 +53,6 @@
 
 
     //TODO: Acredito que a verificação da quantidade mimima poça ser feita com uma função ou trigger
-    //TODO: Adicionar
+    //TODO: Algumas opções de sair deveriam ser voltar
 
     */
