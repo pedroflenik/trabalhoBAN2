@@ -292,7 +292,7 @@ public class Main {
             System.out.println("Escolha uma opção:");
             System.out.println("1 - Cadastra Notificação");
             System.out.println("2 - Cadastra Notificação");
-            System.out.println("3 - Consultar estoque");
+            System.out.println("3 - Consultar estoque peças");
             System.out.println("4 - Sair");
             opcao = scan.nextInt();
 
@@ -304,7 +304,7 @@ public class Main {
                     sistema.cadastrarNotificacao(cadastroNotificacao());
                     break;
                 case 3:
-                    //TODO: Consuta do estoque, no momento o produto não possui uma quantidade associdda, tenho que mudar isso
+                    consutarEstoqueProdutos();
                     break;
                 case 4:
                     // Opção 4 - Consultar
@@ -482,6 +482,16 @@ public class Main {
     }
 
     //********************************************************************
+
+    public static void consutarEstoqueProdutos(){
+        List<Produto> produtos = sistema.getProdutos();
+        System.out.println("Peças disponiveis:");
+        for(Produto p : produtos){
+            System.out.println(
+                    p.getIdProduto() + " - Nome: " + p.getNome() + " Tipo: " + p.getTipo() + " Quantidade: " + p.getQuantidadeEstoque()
+            );
+        }
+    }
 
     public static void mostraClientes(){
         List<Cliente> clientes = sistema.getClientes();
