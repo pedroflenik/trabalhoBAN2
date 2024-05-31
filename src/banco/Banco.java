@@ -508,6 +508,200 @@ public class Banco {
     }
 
 
+    //**************************************************************
+    //Deltar
+    public void deletaProduto(int idProduto, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+
+            st = con.prepareStatement("DELETE FROM produto WHERE idProduto = ?");
+            st.setInt(1, idProduto);
+            st.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            con.rollback();
+            throw e;
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+    public void deletaDepartamento(int idDepartamento, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+
+            st = con.prepareStatement("DELETE FROM departamento WHERE idDep = ?");
+            st.setInt(1, idDepartamento);
+            st.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            con.rollback();
+            throw e;
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+    public void deletaCliente(int idCliente, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+
+            st = con.prepareStatement("DELETE FROM cliente WHERE idCliente = ?");
+
+            st.setInt(1, idCliente);
+
+            st.executeUpdate();
+
+            con.commit();
+
+        } catch (SQLException e) {
+
+            con.rollback();
+            throw e;
+        } finally {
+
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+    public void deletaFornecedor(int idFornecedor, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+
+            st = con.prepareStatement("DELETE FROM fornecedor WHERE idFornecedor = ?");
+
+            st.setInt(1, idFornecedor);
+
+            st.executeUpdate();
+
+            con.commit();
+
+        } catch (SQLException e) {
+
+            con.rollback();
+            throw e;
+        } finally {
+
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+    public void deletaFuncionario(int idFuncionario, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+            st = con.prepareStatement("DELETE FROM funcionario WHERE idFuncionario = ?");
+            st.setInt(1, idFuncionario);
+            st.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            // Em caso de erro, fazemos rollback da transação
+            con.rollback();
+            throw e;
+        } finally {
+            // Fechamos os recursos
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+    public void deletaNotificacao(int idNotificacao, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+            st = con.prepareStatement("DELETE FROM notificacao WHERE idNotificacao = ?");
+            st.setInt(1, idNotificacao);
+            st.executeUpdate();
+            con.commit();
+        } catch (SQLException e) {
+            // Em caso de erro, fazemos rollback da transação
+            con.rollback();
+            throw e;
+        } finally {
+            // Fechamos os recursos
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+    public void deletaPedidoCompra(int idPedidoCompra, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+            st = con.prepareStatement("DELETE FROM pedidoCompra WHERE idPedidoCompra = ?");
+
+            st.setInt(1, idPedidoCompra);
+            st.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            con.rollback();
+            throw e;
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+    public void deletaPedidoPersonalizacao(int idPedido, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+            st = con.prepareStatement("DELETE FROM pedidoPersonalizacao WHERE idPedido = ?");
+            st.setInt(1, idPedido);
+            st.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            con.rollback();
+            throw e;
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+    public void deletaVeiculo(int idVeiculo, Connection con) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+            st = con.prepareStatement("DELETE FROM veiculo WHERE idVeiculo = ?");
+            st.setInt(1, idVeiculo);
+            st.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            con.rollback();
+            throw e;
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+        }
+    }
+
+
+
+
 
 }
 
