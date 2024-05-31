@@ -8,7 +8,7 @@ public class Produto {
 
     private int quantidadeEstoque;
     private int fornecedorPrincipal;
-    private char tipo; //Fundamental ou especifico
+    private char tipo; //Especial ou Comum
     private int quantidadeMinima;
 
     private String descricao;

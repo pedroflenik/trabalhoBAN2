@@ -1,14 +1,12 @@
 
 
 
-
-    //TODO: Diferenciar funcionarios em tipos **Funcionario,Dono,Compras
-    //TODO: Criar classe setor.
+    //TODO:Interface gráfica
+    //TODO: Integração com o banco de dados
+    //TODO: Dono deve conseguir consultar dados como por exemplo a receita da empresa.
     //TODO: Arrumar cadastro funcionario na parte da escolha do setor
     //TODO: Tenho que fazer a verificação de todas as entradas do programa
 
-    //FIXME: Arrumar a id na hora do cadastro de funcinario
-    //FIXME: No cadastro de funcionario no memento de escolha do tipo de funcionario, next().nextCharAt(0) pode causar comportamento indefinido.
 
     //TODO: Acho que não precisasamos guardar o idCliente no pedidoDePersonalização, ja que o veiculoJa possui essa informaçãoe é possivel associar as duas tabelas
             |-> Removi o idCliente do pedido de personalização ***Atualizar diagrama kkkk
