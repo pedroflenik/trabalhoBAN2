@@ -283,13 +283,14 @@ public class Main {
     public static void menuDono(Funcionario funcinarioAtivo){
         int opcao = 0;
         Scanner scan = new Scanner(System.in);
-        while(opcao != 5){ // Ajustei o número da opção de "Sair"
+        while(opcao != 6){ // Ajustei o número da opção de "Sair"
             System.out.println("Escolha uma opção:");
             System.out.println("1 - Cadastro de Clientes, Veículos e Pedidos de Personalização");
             System.out.println("2 - Cadastro de Funcionários e Departamentos");
             System.out.println("3 - Cadastro de Produtos, Fornecedores e Notificações");
             System.out.println("4 - Consultar");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Deletar");
+            System.out.println("6 - Sair");
             opcao = scan.nextInt();
             scan.nextLine();
 
@@ -311,6 +312,9 @@ public class Main {
                     //consultar();
                     break;
                 case 5:
+                    // Opção 4 - Deletar
+                    menuDeletarDono();
+                case 6:
                     System.out.println("Saindo...");
                     break;
                 default:
@@ -385,6 +389,8 @@ public class Main {
     }
 
 
+
+
     public static void menuCadastroRClientes(){
         int opcao = 0;
         Scanner scan = new Scanner(System.in);
@@ -417,7 +423,6 @@ public class Main {
         }
     }
 
-    //TODO: Finalizar isso
     public static void menuCadastroRPessoas(){
         int opcao = 0;
         Scanner scan = new Scanner(System.in);
@@ -516,6 +521,135 @@ public class Main {
             }
         }
     }
+
+
+    public static void menuDeletarDono(){// 3 - Cadastro de Produtos, Fornecedores e Notificações
+        int opcao = 0;
+        Scanner scan = new Scanner(System.in);
+        while(opcao != 4){
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Deletar de Clientes, Veículos e Pedidos de Personalização");
+            System.out.println("2 - Deletar de Funcionários e Departamentos");
+            System.out.println("3 - Deletar de Produtos, Fornecedores e Notificações");
+            System.out.println("4 - Voltar");
+            opcao = scan.nextInt();
+            scan.nextLine();
+
+            switch (opcao){
+                case 1:
+                    menuDeletarRClientes();
+                    break;
+                case 2:
+                    menuDeletarRPessoas();
+                    break;
+                case 3:
+                    menuDeletarRProdutos();
+                case 4:
+                    System.out.println("Voltando...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        }
+    }
+
+    public static void menuDeletarRClientes(){
+        int opcao = 0;
+        Scanner scan = new Scanner(System.in);
+        while(opcao != 4){
+
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Deletar um Clientes, Veículos e Pedidos de Personalização");
+            System.out.println("2 - Deletar um Veículos");
+            System.out.println("3 - Deletar um Pedidos de Personalização");
+            System.out.println("4 - Voltar");
+            opcao = scan.nextInt();
+            scan.nextLine();
+
+            switch (opcao){
+                case 1:
+                    deletarCliente();
+                    break;
+                case 2:
+                    deletarVeiculo();
+                    break;
+                case 3:
+                    deletarPedidoPersonalizacao();
+                case 4:
+                    System.out.println("Voltando...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        }
+    }
+
+    public static void menuDeletarRPessoas(){
+        int opcao = 0;
+        Scanner scan = new Scanner(System.in);
+        while(opcao != 3){
+
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Deletar um funcionário");
+            System.out.println("2 - Deletar um departamento");
+            System.out.println("3 - Voltar");
+            opcao = scan.nextInt();
+            scan.nextLine();
+
+            switch (opcao){
+                case 1:
+                    deletarFuncionario();
+                    break;
+                case 2:
+                    deletarDepartamento();
+                    break;
+                case 3:
+                    System.out.println("Voltando...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        }
+    }
+
+
+    public static void menuDeletarRProdutos(){
+        int opcao = 0;
+        Scanner scan = new Scanner(System.in);
+        while(opcao != 5){
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Deletar produto");
+            System.out.println("2 - Deletar fornecedor");
+            System.out.println("3 - Deletar notificacao");
+            System.out.println("4 - Deletar pedido compra");
+            System.out.println("5 - Voltar");
+            opcao = scan.nextInt();
+            scan.nextLine();
+
+            switch (opcao){
+                case 1:
+                    deletarProduto();
+                    break;
+                case 2:
+                    deletarFornecedor();
+                    break;
+                case 3:
+                    deletarNotificacao();
+                case 4:
+                    deletarPedidoCompra();
+                case 5:
+                    System.out.println("Voltando...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        }
+    }
+
 
 
     //********************************************************************
@@ -623,9 +757,111 @@ public class Main {
         List<Notificacao> notificacoes = sistema.getNotificacoes();
         for(Notificacao n : notificacoes){
             System.out.println(
-                    n.getIdNotificao() + "Produto: " + n.getIdProduto() + " Data Limite: " + n.getDataLimite()
+                    n.getIdNotificao() + " - Produto: " + n.getIdProduto() + " Data Limite: " + n.getDataLimite()
             );
         }
+    }
+
+    public static void mostraFuncionarios(){
+        List<Funcionario> funcionarios = sistema.getFuncionarios();
+        for(Funcionario f : funcionarios){
+            System.out.println(
+                    f.getIdFuncionario() + " - Nome: " + f.getNome() + " CPF: " +f.getCpf()
+            );
+        }
+    }
+
+
+    public static void mostraPedidosPersonalizacao(){
+        List<PedidoPersonalizacao> pedidosPesonalizacao = sistema.getPerdidosPersonalizacao();
+        for(PedidoPersonalizacao pp : pedidosPesonalizacao){
+            System.out.println(
+                    pp.getIdPedido() + " - Veiculo: " + pp.getIdVeiculo() +  "Valor personalização: " + pp.getValorPersonalizacao()
+            );
+        }
+    }
+
+    //********************************************************************
+
+    public static void deletarCliente(){
+        int escolha = 0;
+        System.out.println("Escolha um cliente para deletar:");
+        mostraClientes();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarCliente(escolha);
+    }
+
+    public static void deletarVeiculo(){
+        int escolha = 0;
+        System.out.println("Escolha um veiculo para deletar:");
+        mostraVeiculos();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarVeiculo(escolha);
+    }
+
+    public static void deletarPedidoPersonalizacao(){
+        int escolha = 0;
+        System.out.println("Escolha um pedido de personalização para deletar:");
+        mostraPedidosPersonalizacao();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarPedidoPersonalizacao(escolha);
+    }
+
+    public static void deletarFuncionario(){
+        int escolha = 0;
+        System.out.println("Escolha um funcionario para deletar:");
+        mostraFuncionarios();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarFuncionario(escolha);
+    }
+
+    public static void deletarDepartamento(){
+        int escolha = 0;
+        System.out.println("Escolha um departamento para deletar:");
+        mostraDepartamentosV();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarDepartamento(escolha);
+    }
+
+    public static void deletarProduto(){
+        int escolha = 0;
+        System.out.println("Escolha um produto para deletar:");
+        mostraProdutos();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarProduto(escolha);
+    }
+
+    public static void deletarNotificacao(){
+        int escolha = 0;
+        System.out.println("Escolha uma notificação para deletar:");
+        mostraNotificacoes();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarNotificacao(escolha);
+    }
+
+    public static void deletarFornecedor(){
+        int escolha = 0;
+        System.out.println("Escolha um fornecedor para deletar:");
+        mostraFornecedores();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarFornecedor(escolha);
+    }
+
+    public static void deletarPedidoCompra(){
+        int escolha = 0;
+        System.out.println("Escolha um pedido de compra para deletar:");
+        mostrarPedidosCompra();
+        escolha = scan.nextInt();
+        scan.nextLine();
+        sistema.deletarPedidoCompra(escolha);
     }
 
     //********************************************************************

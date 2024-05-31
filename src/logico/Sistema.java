@@ -217,4 +217,166 @@ public class Sistema {
         return null;
     }
 
+    public Cliente procuraCliente(int idCliente){
+        for(Cliente c : clientes){
+            if(c.getIdCliente() == idCliente){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public int deletarCliente(int idCliente){
+        Cliente c = procuraCliente(idCliente);
+        if(c != null){
+            clientes.remove(c);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public Veiculo procuraVeiculo(int idVeiculo){
+        for(Veiculo v : veiculos){
+            if(v.getIdVeiculo() == idVeiculo){
+                return v;
+            }
+        }
+        return null;
+    }
+
+    public int deletarVeiculo(int idVeiculo){
+        Veiculo v = procuraVeiculo(idVeiculo);
+        if(v != null){
+            veiculos.remove(v);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public PedidoPersonalizacao procurarPedidoPersonalizacao(int idPedido){
+        for(PedidoPersonalizacao pp : perdidosPersonalizacao){
+            if(pp.getIdVeiculo() == idPedido){
+                return pp;
+            }
+        }
+        return null;
+    }
+
+    public int deletarPedidoPersonalizacao(int idPedido){
+        PedidoPersonalizacao pp = procurarPedidoPersonalizacao(idPedido);
+        if(pp != null){
+            veiculos.remove(pp);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public Funcionario procurarFuncionario(int idFuncionario){
+        for(Funcionario f: funcionarios){
+            if(f.getIdFuncionario() == idFuncionario){
+                return f;
+            }
+        }
+        return null;
+    }
+
+    public int deletarFuncionario(int idFuncionario){
+        Funcionario f = procurarFuncionario(idFuncionario);
+        if(f != null){
+            funcionarios.remove(f);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public Departamento procurarDepartamento(int idDepartamento){
+        for(Departamento d: departamentos){
+            if(d.getIdDep() == idDepartamento){
+                return d;
+            }
+        }
+        return null;
+    }
+
+    public int deletarDepartamento(int idDepartamento){
+        Departamento d = procurarDepartamento(idDepartamento);
+        if(d != null){
+            departamentos.remove(d);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public Produto procurarProduto(int idProduto){
+        for(Produto p: produtos){
+            if(p.getIdProduto() == idProduto){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public int deletarProduto(int idProduto){
+        Produto p = procurarProduto(idProduto);
+        if(p != null){
+            produtos.remove(p);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public int deletarNotificacao(int idNotificacao){
+        Notificacao n = procuraNotificacao(idNotificacao);
+        if(n != null){
+            notificacoes.remove(n);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public Fornecedor procuraFornecedor(int idFornecedor){
+        for(Fornecedor f: fornecedores){
+            if(f.getIdFornecedor() == idFornecedor){
+                return f;
+            }
+        }
+        return null;
+    }
+
+    public int deletarFornecedor(int idFornecedor){
+        Fornecedor f = procuraFornecedor(idFornecedor);
+        if(f != null){
+            fornecedores.remove(f);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public PedidoCompra procuraPedidoCompra(int idPedidoCompra){
+        for(PedidoCompra pc: pedidosCompra){
+            if(pc.getIdFornecedor() == idPedidoCompra){
+                return pc;
+            }
+        }
+        return null;
+    }
+
+    public int deletarPedidoCompra(int idPedidoCompra){
+        PedidoCompra pc = procuraPedidoCompra(idPedidoCompra);
+        if(pc != null){
+            fornecedores.remove(pc);
+            return 0;
+        }
+
+        return 1;
+    }
+
 }
