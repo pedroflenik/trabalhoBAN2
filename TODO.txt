@@ -1,6 +1,4 @@
 
-
-
     //TODO:Interface gráfica
     //TODO: Integração com o banco de dados
     //TODO: Dono deve conseguir consultar dados como por exemplo a receita da empresa.
@@ -54,6 +52,5 @@
 
     //TODO: Acredito que a verificação da quantidade mimima poça ser feita com uma função ou trigger
     //TODO: Algumas opções de sair deveriam ser voltar
-    //TODO: Tirar menuCadastro
     //TODO: Implementar integração banco: Consulta
     */

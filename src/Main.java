@@ -235,31 +235,6 @@ public class Main {
     }
 
 
-    //TODO:Tirar isso
-    public static void menuCadastro(){
-        int opcao = 0;
-
-        while(opcao != 2){
-            System.out.println("Escolha uma opção:");
-            System.out.println("1 - Cadastrar Funcionario");
-            System.out.println("2 - Voltar");
-            opcao = scan.nextInt();
-            scan.nextLine();
-
-            switch (opcao){
-                case 1:
-                   //cadastroFuncionario();
-                    break;
-                case 2:
-                    System.out.println("\nVoltando......");
-                    break;
-                default:
-                    System.out.println("Opção inválida..");
-                    break;
-            }
-        }
-    }
-
     //********************************************************************
 
     public static void menuLogin(){
