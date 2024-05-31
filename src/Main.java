@@ -726,7 +726,7 @@ public class Main {
     public static void mostraDepartamentosV(){
         List<Departamento> departamentos = sistema.getDepartamentos();
         for(Departamento d : departamentos){
-            if(d.getIdDep() != 0 && d.getIdDep() != 1){
+            if(d.getTipo() != 'C' && d.getTipo() != 'D'){
                 System.out.println(
                     d.getIdDep() + " - Nome: " + d.getNome() + " Tipo veiculo: " + d.getTipoVeiculo()
                 );
