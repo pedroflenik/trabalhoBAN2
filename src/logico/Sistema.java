@@ -37,72 +37,76 @@ public class Sistema {
         this.pedidosCompra = new ArrayList<>();
     }
 
-    public List<PedidoCompra> getPedidosCompra() {
-        return pedidosCompra;
+    public List<PedidoCompra> getPedidosCompra() throws  SQLException{
+        return  banco.selectPedidoCompra(con.getConnection());
     }
 
     public void setPedidosCompra(List<PedidoCompra> pedidosCompra) {
         this.pedidosCompra = pedidosCompra;
     }
 
-    public List<Notificacao> getNotificacoes() {
-        return notificacoes;
+    public List<Notificacao> getNotificacoes() throws  SQLException{
+        return banco.selectNotificacoes(con.getConnection());
     }
 
     public void setNotificacoes(List<Notificacao> notificacoes) {
         this.notificacoes = notificacoes;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<Produto> getProdutos() throws SQLException {
+        return banco.selectProdutos(con.getConnection());
     }
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
 
-    public List<Fornecedor> getFornecedores() {
-        return fornecedores;
+    public List<Fornecedor> getFornecedores() throws  SQLException {
+        return banco.selectFornecedores(con.getConnection()) ;
     }
 
     public void setFornecedores(List<Fornecedor> fornecedores) {
         this.fornecedores = fornecedores;
     }
 
-    public List<Funcionario> getFuncionarios() {
-        return funcionarios;
+    public List<Funcionario> getFuncionarios() throws SQLException{
+        return banco.selectFuncionarios(con.getConnection());
     }
 
     public void setFuncionarios(List<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
     }
 
-    public List<Cliente> getClientes() {
-        return clientes;
+    public List<Cliente> getClientes() throws SQLException{
+        return banco.selectClientes(con.getConnection());
     }
 
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
     }
 
-    public List<Veiculo> getVeiculos() {
-        return veiculos;
+    public List<Veiculo> getVeiculos() throws SQLException{
+        return banco.selectVeiculos(con.getConnection());
     }
 
     public void setVeiculos(List<Veiculo> veiculos) {
         this.veiculos = veiculos;
     }
 
-    public List<Departamento> getDepartamentos() {
-        return departamentos;
+    public List<Departamento> getDepartamentos() throws  SQLException{
+        return banco.selectDepartamento(con.getConnection());
+    }
+
+    public int countDepartamentos() throws  SQLException{
+        return banco.countDepartamentos(con.getConnection());
     }
 
     public void setDepartamentos(List<Departamento> departamentos) {
         this.departamentos = departamentos;
     }
 
-    public List<PedidoPersonalizacao> getPerdidosPersonalizacao() {
-        return perdidosPersonalizacao;
+    public List<PedidoPersonalizacao> getPerdidosPersonalizacao() throws SQLException{
+        return banco.selectPedidosPersonalizacao(con.getConnection());
     }
 
     public void setPerdidosPersonalizacao(List<PedidoPersonalizacao> perdidosPersonalizacao) {

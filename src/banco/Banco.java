@@ -169,6 +169,32 @@ public class Banco {
     }
 
     //**************************************************************
+    //Ultilidade
+    public int countDepartamentos(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        int count = 0;
+
+        try {
+            st = con.prepareStatement("SELECT COUNT(*) AS total FROM departamento");
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return count;
+    }
+
+    //**************************************************************
     //Consultas
 
     public Funcionario selectLogin(String cpf, Connection con) throws SQLException {
@@ -182,7 +208,6 @@ public class Banco {
             rs = st.executeQuery();
 
             if (rs.next()) {
-
                 funcionario = new Funcionario();
                 funcionario.setIdFuncionario(rs.getInt("idFuncionario"));
                 funcionario.setNome(rs.getString("nome"));
@@ -206,6 +231,282 @@ public class Banco {
 
         return funcionario;
     }
+
+    public List<Departamento> selectDepartamento(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Departamento> departamentos = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM departamento");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Departamento departamento = new Departamento();
+                departamento.setIdDep(rs.getInt("idDep"));
+                departamento.setNome(rs.getString("nome"));
+                departamento.setTipoVeiculo(rs.getString("tipoVeiculo"));
+                departamento.setTipo(rs.getString("tipo").charAt(0));
+                departamentos.add(departamento);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return departamentos;
+    }
+
+    public List<PedidoCompra> selectPedidoCompra(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<PedidoCompra> pedidosCompra = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM pedidoCompra");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                PedidoCompra pedidoCompra = new PedidoCompra();
+                pedidoCompra.setIdPedidoCompra(rs.getInt("idPedidoCompra"));
+                pedidoCompra.setIdFornecedor(rs.getInt("idFornecedor"));
+                pedidoCompra.setIdNotificacao(rs.getInt("idNotificacao"));
+                pedidoCompra.setQuantidade(rs.getInt("quantidade"));
+                pedidoCompra.setTotalCompra(rs.getDouble("totalCompra"));
+                pedidoCompra.setIdProduto(rs.getInt("idProduto"));
+                pedidoCompra.setEntregue(rs.getBoolean("entregue"));
+                pedidosCompra.add(pedidoCompra);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return pedidosCompra;
+    }
+
+    public List<Cliente> selectClientes(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Cliente> clientes = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM cliente");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(rs.getInt("idCliente"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setTelefone(rs.getString("telefone"));
+                clientes.add(cliente);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return clientes;
+    }
+
+    public List<Veiculo> selectVeiculos(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Veiculo> veiculos = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM veiculo");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Veiculo veiculo = new Veiculo();
+                veiculo.setIdVeiculo(rs.getInt("idVeiculo"));
+                veiculo.setModelo(rs.getString("modelo"));
+                veiculo.setAno(rs.getString("ano"));
+                veiculo.setMarca(rs.getString("marca"));
+                veiculo.setIdDono(rs.getInt("idDono"));
+                veiculos.add(veiculo);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return veiculos;
+
+    }
+
+    public List<Produto> selectProdutos(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM produto");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setNome(rs.getString("nome"));
+                produto.setPrecoPorUnidade(rs.getDouble("precoPorUnidade"));
+                produto.setQuantidadeEstoque(rs.getInt("quantidadeEstoque"));
+                produto.setFornecedorPrincipal(rs.getInt("fornecedorPrincipal"));
+                produto.setTipo(rs.getString("tipo").charAt(0));
+                produto.setQuantidadeMinima(rs.getInt("quantidadeMinima"));
+                produto.setDescricao(rs.getString("descricao"));
+                produtos.add(produto);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return produtos;
+    }
+
+    public List<PedidoPersonalizacao> selectPedidosPersonalizacao(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<PedidoPersonalizacao> pedidosPersonalizacao = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM pedidoPersonalizacao");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                PedidoPersonalizacao pedido = new PedidoPersonalizacao();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setDataEntrega(rs.getDate("dataEntrega").toLocalDate());
+                pedido.setDescricao(rs.getString("descricao"));
+                pedido.setValorPersonalizacao(rs.getDouble("valorPersonalizacao"));
+                pedido.setIdVeiculo(rs.getInt("idVeiculo"));
+                pedido.setDepartamentoResponsavel(rs.getInt("departamentoResponsavel"));
+                pedidosPersonalizacao.add(pedido);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return pedidosPersonalizacao;
+    }
+
+    public List<Funcionario> selectFuncionarios(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Funcionario> funcionarios = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM funcionario");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Funcionario funcionario = new Funcionario();
+                funcionario.setIdFuncionario(rs.getInt("idFuncionario"));
+                funcionario.setNome(rs.getString("nome"));
+                funcionario.setCpf(rs.getString("cpf"));
+                funcionario.setTelefone(rs.getString("telefone"));
+                funcionario.setDataContratacao(rs.getDate("dataContratacao").toLocalDate());
+                funcionario.setIdDepartamento(rs.getInt("idDepartamento"));
+                funcionario.setTipo(rs.getString("tipo").charAt(0));
+                funcionarios.add(funcionario);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return funcionarios;
+    }
+
+    public List<Notificacao> selectNotificacoes(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Notificacao> notificacoes = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM notificacao");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Notificacao notificacao = new Notificacao();
+                notificacao.setIdNotificao(rs.getInt("idNotificacao"));
+                notificacao.setIdProduto(rs.getInt("idProduto"));
+                notificacao.setQuantidade(rs.getInt("quantidade"));
+                notificacao.setDataLimite(rs.getDate("dataLimite").toLocalDate());
+                notificacoes.add(notificacao);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return notificacoes;
+    }
+
+    public List<Fornecedor> selectFornecedores(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Fornecedor> fornecedores = new ArrayList<>();
+
+        try {
+            st = con.prepareStatement("SELECT * FROM fornecedor");
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Fornecedor fornecedor = new Fornecedor();
+                fornecedor.setIdFornecedor(rs.getInt("idFornecedor"));
+                fornecedor.setEndereco(rs.getString("endereco"));
+                fornecedor.setNome(rs.getString("nome"));
+                fornecedor.setTelefone(rs.getString("telefone"));
+                fornecedores.add(fornecedor);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return fornecedores;
+    }
+
 
 
 }

@@ -29,7 +29,13 @@ public class Main {
 
 
     public static void  confirmarEntregaProduto(){
-        List<PedidoCompra> pedidos = sistema.getPedidosCompra();
+        List<PedidoCompra> pedidos = null;
+        try {
+            pedidos = sistema.getPedidosCompra();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         int escolha = 0;
         System.out.println("Escolha um pedido para confirmar a entrega:");
         mostrarPedidosCompra();
@@ -180,13 +186,18 @@ public class Main {
                 novoFuncionario.setIdDepartamento(2);
                 break;
             case 'M':
-                if(sistema.getDepartamentos().size() == 2){
-                    System.out.println("Cadastre um departamento para mecanicos antes de cadastrar um funcionario");
-                    return null;
-                }else{
-                    System.out.println("Escolha um departamento para o funcionario:");
-                    mostraDepartamentosV();
+                try {
+                    if(sistema.countDepartamentos() == 2){
+                        System.out.println("Cadastre um departamento para mecanicos antes de cadastrar um funcionario");
+                        return null;
+                    }else{
+                        System.out.println("Escolha um departamento para o funcionario:");
+                        mostraDepartamentosV();
+                    }
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
                 }
+
 
                 novoFuncionario.setIdDepartamento(scan.nextInt());
                 scan.nextLine();
@@ -751,7 +762,13 @@ public class Main {
     //********************************************************************
 
     public static void consutarEstoqueProdutos(){
-        List<Produto> produtos = sistema.getProdutos();
+        List<Produto> produtos = null;
+        try {
+            produtos = sistema.getProdutos();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         System.out.println("Peças disponiveis:");
         for(Produto p : produtos){
             System.out.println(
@@ -761,7 +778,13 @@ public class Main {
     }
 
     public static void mostraClientes(){
-        List<Cliente> clientes = sistema.getClientes();
+        List<Cliente> clientes = null;
+        try {
+            clientes = sistema.getClientes();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         for(Cliente c : clientes){
             System.out.println(
                     c.getIdCliente() + " - " + c.getNome() + " " + c.getCpf()
@@ -770,7 +793,12 @@ public class Main {
     }
 
     public static void mostraVeiculos(){
-        List<Veiculo> veiculos = sistema.getVeiculos();
+        List<Veiculo> veiculos = null;
+        try {
+            veiculos = sistema.getVeiculos();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         for(Veiculo v : veiculos){
             System.out.println(
                 v.getIdVeiculo() + " - Modelo: " + v.getModelo() + " Ano: " + v.getAno()
@@ -779,7 +807,12 @@ public class Main {
     }
 
     public static void mostraProdutos(){
-        List<Produto> produtos = sistema.getProdutos();
+        List<Produto> produtos = null;
+        try {
+            produtos = sistema.getProdutos();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         for(Produto p : produtos){
             System.out.println(
                      p.getIdProduto() + " - Nome: " + p.getNome() + " Fornecedor principal: " + p.getFornecedorPrincipal()
@@ -788,7 +821,12 @@ public class Main {
     }
 
     public static void mostraDepartamentosV(){
-        List<Departamento> departamentos = sistema.getDepartamentos();
+        List<Departamento> departamentos = null;
+        try {
+            departamentos = sistema.getDepartamentos();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         for(Departamento d : departamentos){
             if(d.getTipo() != 'C' && d.getTipo() != 'D'){
                 System.out.println(
@@ -800,7 +838,13 @@ public class Main {
 
 
     public static void mostrarPedidosCompra(){
-        List<PedidoCompra> pedidosCompra = sistema.getPedidosCompra();
+        List<PedidoCompra> pedidosCompra = null;
+        try {
+            pedidosCompra = sistema.getPedidosCompra();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         for(PedidoCompra pd : pedidosCompra){
                 System.out.println(
                        pd.getIdPedidoCompra() + " - " + "Número produto: " + pd.getIdProduto() + " Quantidade: " + pd.getQuantidade() + " Valor: " + pd.getTotalCompra()
@@ -809,7 +853,13 @@ public class Main {
     }
 
     public static void mostraFornecedores(){
-        List<Fornecedor> fornecedores = sistema.getFornecedores();
+        List<Fornecedor> fornecedores = null;
+        try {
+            fornecedores = sistema.getFornecedores();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         for(Fornecedor d : fornecedores){
             System.out.println(
                     d.getIdFornecedor() + " - Nome: " + d.getNome() + " Telefone: " + d.getTelefone()
@@ -818,7 +868,13 @@ public class Main {
     }
 
     public static void mostraNotificacoes(){
-        List<Notificacao> notificacoes = sistema.getNotificacoes();
+        List<Notificacao> notificacoes = null;
+        try {
+            notificacoes = sistema.getNotificacoes();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         for(Notificacao n : notificacoes){
             System.out.println(
                     n.getIdNotificao() + " - Produto: " + n.getIdProduto() + " Data Limite: " + n.getDataLimite()
@@ -827,7 +883,12 @@ public class Main {
     }
 
     public static void mostraFuncionarios(){
-        List<Funcionario> funcionarios = sistema.getFuncionarios();
+        List<Funcionario> funcionarios = null;
+        try {
+            funcionarios = sistema.getFuncionarios();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         for(Funcionario f : funcionarios){
             System.out.println(
                     f.getIdFuncionario() + " - Nome: " + f.getNome() + " CPF: " +f.getCpf()
@@ -837,7 +898,12 @@ public class Main {
 
 
     public static void mostraPedidosPersonalizacao(){
-        List<PedidoPersonalizacao> pedidosPesonalizacao = sistema.getPerdidosPersonalizacao();
+        List<PedidoPersonalizacao> pedidosPesonalizacao = null;
+        try {
+            pedidosPesonalizacao = sistema.getPerdidosPersonalizacao();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         for(PedidoPersonalizacao pp : pedidosPesonalizacao){
             System.out.println(
                     pp.getIdPedido() + " - Veiculo: " + pp.getIdVeiculo() +  "Valor personalização: " + pp.getValorPersonalizacao()
