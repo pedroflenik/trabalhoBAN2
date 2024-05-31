@@ -31,6 +31,8 @@
         O tipo agora nas peças indica se a peça é especial ou comum.
         Peças especiais tem descrição != null
 
+        //TODO Adicionar inserção de setores inicials ao script de criação do banco
+
 
     Mecanico cria notificacao -> Compras vizualização notificações
                                  Cria pedidos de compra
@@ -52,5 +54,6 @@
 
     //TODO: Acredito que a verificação da quantidade mimima poça ser feita com uma função ou trigger
     //TODO: Algumas opções de sair deveriam ser voltar
-
+    //TODO: Tirar menuCadastro
+    //TODO: Implementar integração banco: Consulta
     */

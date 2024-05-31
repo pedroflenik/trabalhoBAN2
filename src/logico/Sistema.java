@@ -1,9 +1,11 @@
 package logico;
 
 import dados.*;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import banco.*;
 public class Sistema {
 
     private List<Funcionario> funcionarios;
@@ -19,9 +21,11 @@ public class Sistema {
 
     private List<PedidoCompra> pedidosCompra;
 
-
-
+    private Banco banco;
+    private Conexao con;
     public Sistema() {
+        this.banco = new Banco();
+        this.con = new Conexao();
         this.funcionarios = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.veiculos = new ArrayList<>();
@@ -105,13 +109,14 @@ public class Sistema {
         this.perdidosPersonalizacao = perdidosPersonalizacao;
     }
 
-    public int cadastrarVeiculo(Veiculo novoVeiculo){
+    public int cadastrarVeiculo(Veiculo novoVeiculo) throws SQLException {
         novoVeiculo.setIdVeiculo(veiculos.size() + 1);
         veiculos.add(novoVeiculo);
+        banco.cadastrarVeiculo(novoVeiculo,con.getConnection());
         return 0;
     }
 
-    public int cadastrarPedidoCompra(PedidoCompra novoPedidoCompra){
+    public int cadastrarPedidoCompra(PedidoCompra novoPedidoCompra) throws SQLException{
         novoPedidoCompra.setIdPedidoCompra(pedidosCompra.size() + 1);
         Notificacao notificacaoAssociada = procuraNotificacao(novoPedidoCompra.getIdNotificacao());
         Produto produtoAssociado = procuraProduto(notificacaoAssociada.getIdProduto());
@@ -141,61 +146,64 @@ public class Sistema {
         */
 
         pedidosCompra.add(novoPedidoCompra);
+        banco.cadastrarPedidoCompra(novoPedidoCompra, con.getConnection());
         return 0;
     }
 
-    public int cadastrarNotificacao(Notificacao novaNotificacao){
+    public int cadastrarNotificacao(Notificacao novaNotificacao) throws  SQLException{
         novaNotificacao.setIdNotificao(notificacoes.size() + 1);
         notificacoes.add(novaNotificacao);
+        banco.cadastrarNotificacao(novaNotificacao, con.getConnection());
         return 0;
     }
 
-    public int cadastrarDepartamento(Departamento novoDepartamento){
+    public int cadastrarDepartamento(Departamento novoDepartamento) throws  SQLException{
         novoDepartamento.setIdDep(departamentos.size() + 1);
         departamentos.add(novoDepartamento);
+        banco.cadastrarDepartamento(novoDepartamento,con.getConnection());
         return 0;
     }
-    public int cadastraFuncionario(Funcionario novoFuncionario) {
+    public int cadastraFuncionario(Funcionario novoFuncionario) throws SQLException {
         if(novoFuncionario == null){
             return 1;
         }
         novoFuncionario.setIdFuncionario(funcionarios.size() + 1);
         funcionarios.add(novoFuncionario);
+        banco.cadastrarFuncionario(novoFuncionario,con.getConnection());
         return 0;
     }
 
-    public int cadastrarPedidoPersonalizacao(PedidoPersonalizacao novoPedido) {
+    public int cadastrarPedidoPersonalizacao(PedidoPersonalizacao novoPedido) throws SQLException{
         novoPedido.setIdPedido(perdidosPersonalizacao.size() + 1);
         perdidosPersonalizacao.add(novoPedido);
+        banco.cadastrarPedidoPersonalizacao(novoPedido,con.getConnection());
         return 0;
     }
 
-    public int cadastraCliente(Cliente novoCliente){
+    public int cadastraCliente(Cliente novoCliente) throws  SQLException{
         novoCliente.setIdCliente(clientes.size() + 1);
         clientes.add(novoCliente);
+        banco.cadastrarCliente(novoCliente,con.getConnection());
         return 0;
     }
 
 
-    public int cadastraFornecedor(Fornecedor novoFornecedor){
+    public int cadastraFornecedor(Fornecedor novoFornecedor) throws  SQLException{
         novoFornecedor.setIdFornecedor(fornecedores.size() + 1);
         fornecedores.add(novoFornecedor);
+        banco.cadastrarFornecedor(novoFornecedor, con.getConnection());
         return 0;
     }
 
-    public int cadastraProduto(Produto novoProduto){
+    public int cadastraProduto(Produto novoProduto) throws  SQLException{
         novoProduto.setIdProduto(produtos.size() + 1);
         produtos.add(novoProduto);
+        banco.cadastrarProduto(novoProduto, con.getConnection());
         return 0;
     }
 
-    public Funcionario efetuaLogin(String cpf){
-        for(Funcionario f : funcionarios){
-            if(f.getCpf().equals(cpf)){
-                return f; // SUCESSO LOGIN
-            }
-        }
-        return null; // ERRO LOGIN
+    public Funcionario efetuaLogin(String cpf) throws SQLException{
+        return banco.selectLogin(cpf,con.getConnection());
     }
 
     public Notificacao procuraNotificacao(int idNotificacao){

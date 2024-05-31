@@ -1,4 +1,6 @@
 import dados.*;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -151,7 +153,7 @@ public class Main {
         novoFuncionario.setTelefone(scan.nextLine());
         novoFuncionario.setDataContratacao(pegaData("Insira a data de contratação do funcionário:"));
         novoFuncionario.setTipo('D');
-        novoFuncionario.setIdDepartamento(0);
+        novoFuncionario.setIdDepartamento(1);
 
         return novoFuncionario;
     }
@@ -172,10 +174,10 @@ public class Main {
         novoFuncionario.setTipo(scan.next().charAt(0));
         switch (novoFuncionario.getTipo()){
             case  'D':
-                novoFuncionario.setIdDepartamento(0);
+                novoFuncionario.setIdDepartamento(1);
                 break;
             case 'C':
-                novoFuncionario.setIdDepartamento(1);
+                novoFuncionario.setIdDepartamento(2);
                 break;
             case 'M':
                 if(sistema.getDepartamentos().size() == 2){
@@ -221,6 +223,8 @@ public class Main {
         return data;
     }
 
+
+    //TODO:Tirar isso
     public static void menuCadastro(){
         int opcao = 0;
 
@@ -252,7 +256,12 @@ public class Main {
         scan.nextLine();
         System.out.println("Insira seu cpf:");
         cpf = scan.nextLine();
-        Funcionario funcinarioAtivo = sistema.efetuaLogin(cpf);
+        Funcionario funcinarioAtivo = null;
+        try{
+            funcinarioAtivo = sistema.efetuaLogin(cpf);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         if(funcinarioAtivo != null){
             System.out.println("Login efetuado com sucesso!");
             escolheMenu(funcinarioAtivo);
@@ -341,7 +350,11 @@ public class Main {
                     menuCadastroRClientes();
                     break;
                 case 2:
-                    sistema.cadastrarNotificacao(cadastroNotificacao());
+                    try {
+                        sistema.cadastrarNotificacao(cadastroNotificacao());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
                     consutarEstoqueProdutos();
@@ -370,10 +383,18 @@ public class Main {
 
             switch (opcao){
                 case 1:
-                    sistema.cadastrarPedidoCompra(cadastroPedidoCompra());
+                    try {
+                        sistema.cadastrarPedidoCompra(cadastroPedidoCompra());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
-                    sistema.cadastrarNotificacao(cadastroNotificacao());
+                    try {
+                        sistema.cadastrarNotificacao(cadastroNotificacao());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
                     menuConsultaCompras();
@@ -405,13 +426,25 @@ public class Main {
 
             switch (opcao){
                 case 1:
-                    sistema.cadastraCliente(cadastroCliente());
+                    try {
+                        sistema.cadastraCliente(cadastroCliente());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
-                    sistema.cadastrarVeiculo(cadastroVeiculo());
+                    try {
+                        sistema.cadastrarVeiculo(cadastroVeiculo());
+                     }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
-                    sistema.cadastrarPedidoPersonalizacao(cadastroPeididoPersonalizacao());
+                    try{
+                        sistema.cadastrarPedidoPersonalizacao(cadastroPeididoPersonalizacao());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 4:
                     System.out.println("Saindo...");
@@ -437,13 +470,23 @@ public class Main {
             switch (opcao){
                 case 1:
                     // Opção 1 - Cadastro de Funcionario,
-                    if(sistema.cadastraFuncionario(cadastroFuncionario()) == 1){
-                        System.out.println("ERRO: Falha ao cadastrar funcionário");
-                    };
+                    try {
+                        if (sistema.cadastraFuncionario(cadastroFuncionario()) == 1) {
+                        } else {
+                            throw new Exception("ERRO: Falha ao cadastrar funcionário");
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
                     break;
                 case 2:
                     // Opção 2 - Departamentos
+                    try{
                     sistema.cadastrarDepartamento(cadastroDepartamento());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
                     System.out.println("Saindo...");
@@ -454,7 +497,6 @@ public class Main {
             }
         }
     }
-
 
     public static void menuCadastroRProdutos(){// 3 - Cadastro de Produtos, Fornecedores e Notificações
         int opcao = 0;
@@ -472,15 +514,31 @@ public class Main {
             switch (opcao){
                 case 1:
                     // Opção 1 - Cadastro de Funcionario,
-                    sistema.cadastraProduto(cadastroProduto());
+                    try {
+                        sistema.cadastraProduto(cadastroProduto());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
-                    sistema.cadastraFornecedor(cadastroFornecedor());
+                    try {
+                        sistema.cadastraFornecedor(cadastroFornecedor());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
-                    sistema.cadastrarNotificacao(cadastroNotificacao());
+                    try{
+                        sistema.cadastrarNotificacao(cadastroNotificacao());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                 case 4:
-                    sistema.cadastrarPedidoCompra(cadastroPedidoCompra());
+                    try {
+                        sistema.cadastrarPedidoCompra(cadastroPedidoCompra());
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                 case 5:
                     System.out.println("Saindo...");
                     break;
@@ -666,9 +724,15 @@ public class Main {
 
             switch (opcao){
                 case 1:
-                    if(sistema.cadastraFuncionario(cadastroAministrador()) == 1){
-                        System.out.println("ERRO: Falha ao cadastrar funcionário");
-                    };
+                    // Opção 1 - Cadastro de Funcionario,
+                    try {
+                        if (sistema.cadastraFuncionario(cadastroAministrador()) == 1) {
+                        } else {
+                            throw new Exception("ERRO: Falha ao cadastrar funcionário");
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
                     menuLogin();
@@ -728,7 +792,7 @@ public class Main {
         for(Departamento d : departamentos){
             if(d.getTipo() != 'C' && d.getTipo() != 'D'){
                 System.out.println(
-                    d.getIdDep() + " - Nome: " + d.getNome() + " Tipo veiculo: " + d.getTipoVeiculo()
+                    d.getIdDep()  + 2 + " - Nome: " + d.getNome() + " Tipo veiculo: " + d.getTipoVeiculo()
                 );
             }
         }
@@ -867,17 +931,28 @@ public class Main {
     //********************************************************************
     //TODO: Precisa adicionar a possibilidade de deletar as coisas
     public static void main(String[] args) {
-        Departamento depInicial = new Departamento();
-        depInicial.setIdDep(0);
-        depInicial.setTipoVeiculo(null);
-        depInicial.setTipo('D');
-        depInicial.setNome("Dono");
-        sistema.cadastrarDepartamento(depInicial);
-        depInicial.setIdDep(1);
-        depInicial.setTipoVeiculo(null);
-        depInicial.setTipo('C');
-        depInicial.setNome("compras");
-        sistema.cadastrarDepartamento(depInicial);
+        int jaCadastrado = 1;
+        if(jaCadastrado == 0){
+            Departamento depInicial = new Departamento();
+            depInicial.setIdDep(0);
+            depInicial.setTipoVeiculo(null);
+            depInicial.setTipo('D');
+            depInicial.setNome("Dono");
+            try{
+                sistema.cadastrarDepartamento(depInicial);
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            depInicial.setIdDep(1);
+            depInicial.setTipoVeiculo(null);
+            depInicial.setTipo('C');
+            depInicial.setNome("compras");
+            try{
+                sistema.cadastrarDepartamento(depInicial);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
 
         mostraMenuInicial();
     }

@@ -19,7 +19,7 @@ public class Banco {
     public void cadastrarFuncionario(Funcionario novoFuncionario, Connection con) throws SQLException {
         PreparedStatement st = null;
         try {
-            st = con.prepareStatement("INSERT INTO funcionarios (nome, cpf, telefone, dataContratacao, idDepartamento, tipo) "
+            st = con.prepareStatement("INSERT INTO funcionario (nome, cpf, telefone, dataContratacao, idDepartamento, tipo) "
                     + "VALUES (?, ?, ?, ?, ?, ?)");
             st.setString(1, novoFuncionario.getNome());
             st.setString(2, novoFuncionario.getCpf());
@@ -168,6 +168,44 @@ public class Banco {
         }
     }
 
+    //**************************************************************
+    //Consultas
+
+    public Funcionario selectLogin(String cpf, Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        Funcionario funcionario = null;
+
+        try {
+            st = con.prepareStatement("SELECT * FROM funcionario WHERE cpf=?");
+            st.setString(1, cpf);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+
+                funcionario = new Funcionario();
+                funcionario.setIdFuncionario(rs.getInt("idFuncionario"));
+                funcionario.setNome(rs.getString("nome"));
+                funcionario.setCpf(rs.getString("cpf"));
+                funcionario.setTelefone(rs.getString("telefone"));
+                //Converte data
+                Date dataContratacaoSql = rs.getDate("dataContratacao");
+                LocalDate dataContratacao = dataContratacaoSql.toLocalDate();
+                funcionario.setDataContratacao(dataContratacao);
+                funcionario.setIdDepartamento(rs.getInt("idDepartamento"));
+                funcionario.setTipo(rs.getString("tipo").charAt(0));
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return funcionario;
+    }
 
 
 }
