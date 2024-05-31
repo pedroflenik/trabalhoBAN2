@@ -295,14 +295,10 @@ public class Sistema {
         return null;
     }
 
-    public int deletarFuncionario(int idFuncionario){
-        Funcionario f = procurarFuncionario(idFuncionario);
-        if(f != null){
-            funcionarios.remove(f);
-            return 0;
-        }
-
-        return 1;
+    
+    public int deletarFuncionario(int idFuncionario) throws SQLException{
+       banco.deletaFuncionario(idFuncionario,con.getConnection());
+        return 0;
     }
 
     public Departamento procurarDepartamento(int idDepartamento){
@@ -314,14 +310,9 @@ public class Sistema {
         return null;
     }
 
-    public int deletarDepartamento(int idDepartamento){
-        Departamento d = procurarDepartamento(idDepartamento);
-        if(d != null){
-            departamentos.remove(d);
-            return 0;
-        }
-
-        return 1;
+    public int deletarDepartamento(int idDepartamento) throws SQLException{
+        banco.deletaDepartamento(idDepartamento,con.getConnection());
+        return 0;
     }
 
     public Produto procurarProduto(int idProduto){
@@ -333,24 +324,14 @@ public class Sistema {
         return null;
     }
 
-    public int deletarProduto(int idProduto){
-        Produto p = procurarProduto(idProduto);
-        if(p != null){
-            produtos.remove(p);
-            return 0;
-        }
-
-        return 1;
+    public int deletarProduto(int idProduto) throws  SQLException{
+        banco.deletaProduto(idProduto,con.getConnection());
+        return 0;
     }
 
-    public int deletarNotificacao(int idNotificacao){
-        Notificacao n = procuraNotificacao(idNotificacao);
-        if(n != null){
-            notificacoes.remove(n);
-            return 0;
-        }
-
-        return 1;
+    public int deletarNotificacao(int idNotificacao) throws  SQLException{
+        banco.deletaNotificacao(idNotificacao,con.getConnection());
+        return 0;
     }
 
     public Fornecedor procuraFornecedor(int idFornecedor){
@@ -362,14 +343,9 @@ public class Sistema {
         return null;
     }
 
-    public int deletarFornecedor(int idFornecedor){
-        Fornecedor f = procuraFornecedor(idFornecedor);
-        if(f != null){
-            fornecedores.remove(f);
-            return 0;
-        }
-
-        return 1;
+    public int deletarFornecedor(int idFornecedor) throws  SQLException{
+        banco.deletaFornecedor(idFornecedor,con.getConnection());
+        return 0;
     }
 
     public PedidoCompra procuraPedidoCompra(int idPedidoCompra){
@@ -381,14 +357,9 @@ public class Sistema {
         return null;
     }
 
-    public int deletarPedidoCompra(int idPedidoCompra){
-        PedidoCompra pc = procuraPedidoCompra(idPedidoCompra);
-        if(pc != null){
-            fornecedores.remove(pc);
-            return 0;
-        }
-
-        return 1;
+    public int deletarPedidoCompra(int idPedidoCompra) throws SQLException{
+        banco.deletaProduto(idPedidoCompra,con.getConnection());
+        return 0;
     }
 
 }

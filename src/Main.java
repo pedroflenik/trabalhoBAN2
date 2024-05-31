@@ -915,13 +915,17 @@ public class Main {
         sistema.deletarPedidoPersonalizacao(escolha);
     }
 
-    public static void deletarFuncionario(){
+    public static void deletarFuncionario() {
         int escolha = 0;
         System.out.println("Escolha um funcionario para deletar:");
         mostraFuncionarios();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarFuncionario(escolha);
+        try {
+            sistema.deletarFuncionario(escolha);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void deletarDepartamento(){
@@ -930,7 +934,11 @@ public class Main {
         mostraDepartamentosV();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarDepartamento(escolha);
+        try {
+            sistema.deletarDepartamento(escolha);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void deletarProduto(){
@@ -939,7 +947,11 @@ public class Main {
         mostraProdutos();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarProduto(escolha);
+        try {
+            sistema.deletarProduto(escolha);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void deletarNotificacao(){
@@ -948,7 +960,11 @@ public class Main {
         mostraNotificacoes();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarNotificacao(escolha);
+        try {
+            sistema.deletarNotificacao(escolha);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void deletarFornecedor(){
@@ -957,7 +973,11 @@ public class Main {
         mostraFornecedores();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarFornecedor(escolha);
+        try{
+            sistema.deletarFornecedor(escolha);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void deletarPedidoCompra(){
@@ -966,35 +986,16 @@ public class Main {
         mostrarPedidosCompra();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarPedidoCompra(escolha);
+        try {
+            sistema.deletarPedidoCompra(escolha);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     //********************************************************************
     //TODO: Precisa adicionar a possibilidade de deletar as coisas
     public static void main(String[] args) {
-        int jaCadastrado = 1;
-        if(jaCadastrado == 0){
-            Departamento depInicial = new Departamento();
-            depInicial.setIdDep(0);
-            depInicial.setTipoVeiculo(null);
-            depInicial.setTipo('D');
-            depInicial.setNome("Dono");
-            try{
-                sistema.cadastrarDepartamento(depInicial);
-            }catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            depInicial.setIdDep(1);
-            depInicial.setTipoVeiculo(null);
-            depInicial.setTipo('C');
-            depInicial.setNome("compras");
-            try{
-                sistema.cadastrarDepartamento(depInicial);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-        }
-
         mostraMenuInicial();
     }
 }
