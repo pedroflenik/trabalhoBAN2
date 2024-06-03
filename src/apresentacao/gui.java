@@ -15,7 +15,7 @@ public class gui {
     private static guiMecanico guiMecanico;
     private static guiCompras guiCompras;
     public gui() {
-        sistema = new Sistema();
+        this.sistema = new Sistema();
         guiDono = new guiDono(sistema);
         guiMecanico = new guiMecanico(sistema);
         guiCompras = new guiCompras(sistema);

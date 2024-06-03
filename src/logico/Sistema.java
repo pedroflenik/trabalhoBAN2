@@ -382,4 +382,11 @@ public class Sistema {
         return  banco.totalPedidiosPersonalizacao(con.getConnection());
     }
 
+    public int confirmarEntrega(int idPedido)throws SQLException{
+        banco.confirmarEntrega(idPedido,con.getConnection());
+        return 0;
+    }
+
+
+
 }

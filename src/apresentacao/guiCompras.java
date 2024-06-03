@@ -27,6 +27,8 @@ public class guiCompras {
         this.sistema = sistema;
     }
 
+
+
     public static int extrairId(String textoCompleto) {
         // Divide o texto completo usando espaços em branco como delimitadores
         String[] partes = textoCompleto.split("\\s+");
@@ -80,7 +82,79 @@ public class guiCompras {
         }
     }
 
+    public static void menuConfirmarEntrega(Frame frameAnterior) {
+        JFrame frame = new JFrame("Confirmar Entrega");
 
+        JPanel formularioConfirmarCompra = new JPanel(new GridLayout(2, 2));
+        formularioConfirmarCompra.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        formularioConfirmarCompra.add(new JLabel("Pedido de compra:"));
+        JComboBox<String> pedidoCompraBox = new JComboBox<>();
+        List<PedidoCompra> pedidosCompra = new ArrayList<>();
+        try {
+            pedidosCompra = sistema.getPedidosCompra();
+        } catch (Exception ex) {
+            System.out.println("ERRO: No getPedidosCompra " + ex.getMessage());
+        }
+        if (pedidosCompra.size() != 0) {
+            pedidoCompraBox.addItem("--- Escolher ---");
+            for (PedidoCompra pc : pedidosCompra) {
+                if(!pc.isEntregue()){
+                    pedidoCompraBox.addItem(pc.getIdPedidoCompra() + " - Fornecedor: " + pc.getIdFornecedor() + " - Produto: " + pc.getIdProduto());
+                }
+            }
+            pedidosCompra.clear();
+        } else {
+            pedidoCompraBox.addItem("Vazio");
+        }
+        formularioConfirmarCompra.add(pedidoCompraBox);
+
+        JButton confirmarEntrega = new JButton("Confirmar entrega");
+        confirmarEntrega.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String textoPedidoBox = (String) pedidoCompraBox.getSelectedItem();
+                if (textoPedidoBox.equals("--- Escolher ---")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, escolha um pedido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (textoPedidoBox.equals("Vazio")) {
+                    JOptionPane.showMessageDialog(frame, "Não há pedidos cadastrados", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                int idPedido = extrairId(textoPedidoBox);
+
+                try {
+                    sistema.confirmarEntrega(idPedido);
+                    JOptionPane.showMessageDialog(frame, "Entrega confirmada ", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                    JOptionPane.showMessageDialog(frame, "Falha ao confirmar entrega", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        });
+
+        JPanel botoesConfirmarEntregaPanel = new JPanel();
+        botoesConfirmarEntregaPanel.add(confirmarEntrega);
+
+        JButton voltarButton = new JButton("Voltar");
+        voltarButton.addActionListener(e -> {
+            // Fechar a janela atual
+            frame.dispose();
+            // Voltar para a janela anterior
+            frameAnterior.setVisible(true);
+        });
+
+        botoesConfirmarEntregaPanel.add(voltarButton);
+        formularioConfirmarCompra.add(botoesConfirmarEntregaPanel);
+        frame.add(formularioConfirmarCompra, BorderLayout.CENTER);
+        frame.setSize(400, 200);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+
+    //Consulta
     public static void menuConsultaRProdutos(Frame frameAnterior){
         JFrame frame = new JFrame("Consulta de Produtos");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -983,6 +1057,7 @@ public class guiCompras {
         // Cria os botões
         JButton botao1 = new JButton("Cadastrar");
         JButton botao2 = new JButton("Consultar");
+        JButton botao3 = new JButton("Confirmar entrega");
         JButton botaoVoltar = new JButton("Voltar");
 
         // Adiciona listeners de eventos aos botões
@@ -1001,6 +1076,14 @@ public class guiCompras {
             }
         });
 
+        botao3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                menuConfirmarEntrega(frame);
+            }
+        });
+
 
 
         botaoVoltar.addActionListener(new ActionListener() {
@@ -1014,13 +1097,14 @@ public class guiCompras {
         // Adiciona os botões ao painel de botões
         painelBotoes.add(botao1);
         painelBotoes.add(botao2);
+        painelBotoes.add(botao3);
         painelBotoes.add(botaoVoltar);
 
         // Adiciona o painel de botões ao centro da janela
         frame.add(painelBotoes, BorderLayout.CENTER);
 
         // Define o tamanho da janela
-        frame.setSize(400, 200);
+        frame.setSize(500, 200);
 
         // Define a operação padrão ao fechar a janela
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -749,7 +749,17 @@ public class Banco {
         return total;
     }
 
+    public void confirmarEntrega( int idPedido,Connection con) throws SQLException {
+        // Preparar a chamada da função PL/pgSQL usando uma instrução SQL simples
+        String sql = "SELECT atualizar_pedido_e_produto(?)";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            // Configurar o idPedido como parâmetro da função
+            stmt.setInt(1, idPedido);
 
+            // Executar a instrução SQL
+            stmt.execute();
+        }
+    }
 
 }
 
