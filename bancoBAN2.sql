@@ -70,7 +70,7 @@ CREATE TABLE pedidoPersonalizacao (
     departamentoResponsavel INT,
     quantidadeProduto INT,
     idProduto INT,
-    FOREIGN KEY (idProduto) REFERENCES Prodtuo (idProduto),
+    FOREIGN KEY (idProduto) REFERENCES produto (idProduto),
     FOREIGN KEY (idVeiculo) REFERENCES Veiculo(idVeiculo),
     FOREIGN KEY (departamentoResponsavel) REFERENCES Departamento(idDep)
 );
@@ -111,7 +111,7 @@ BEGIN
     SET quantidadeEstoque = quantidadeEstoque + quantidadePedido
     WHERE idProduto = idProdutoPedido;
 
-    
+
     RAISE NOTICE 'Pedido e produto atualizados com sucesso';
 END;
 $$
@@ -176,9 +176,31 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+
+
 CREATE TRIGGER verificar_estoque_suficiente_trigger
 BEFORE INSERT ON pedidoPersonalizacao
 FOR EACH ROW EXECUTE FUNCTION verificar_estoque_suficiente();
+
+
+
+CREATE OR REPLACE FUNCTION remover_quantidade_estoque_pedido_personalizacao_trigger()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Atualiza a quantidade em estoque do produto
+    UPDATE produto
+    SET quantidadeEstoque = quantidadeEstoque - NEW.quantidadeProduto
+    WHERE idProduto = NEW.idProduto;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER remover_quantidade_estoque_trigger
+AFTER INSERT ON pedidoPersonalizacao
+FOR EACH ROW EXECUTE FUNCTION remover_quantidade_estoque_pedido_personalizacao_trigger();
+
 
 INSERT INTO departamento (nome, tipoVeiculo, tipo)
 VALUES ('Dono', NULL, 'D');
