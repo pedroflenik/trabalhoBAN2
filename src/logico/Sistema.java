@@ -35,6 +35,7 @@ public class Sistema {
         this.produtos = new ArrayList<>();
         this.notificacoes = new ArrayList<>();
         this.pedidosCompra = new ArrayList<>();
+        this.con = new Conexao();
     }
 
     public List<PedidoCompra> getPedidosCompra() throws  SQLException{
@@ -120,6 +121,13 @@ public class Sistema {
         return 0;
     }
 
+    public int cadastrarFornecedor(Fornecedor novoFornecedor) throws  SQLException{
+        novoFornecedor.setIdFornecedor(fornecedores.size() + 1);
+        fornecedores.add(novoFornecedor);
+        banco.cadastrarFornecedor(novoFornecedor,con.getConnection());
+        return 0;
+    }
+
     public int cadastrarPedidoCompra(PedidoCompra novoPedidoCompra) throws SQLException{
         novoPedidoCompra.setIdPedidoCompra(pedidosCompra.size() + 1);
         Notificacao notificacaoAssociada = procuraNotificacao(novoPedidoCompra.getIdNotificacao());
@@ -151,6 +159,7 @@ public class Sistema {
 
         pedidosCompra.add(novoPedidoCompra);
         banco.cadastrarPedidoCompra(novoPedidoCompra, con.getConnection());
+        banco.deletaNotificacao(notificacaoAssociada.getIdNotificao(),con.getConnection());
         return 0;
     }
 
@@ -168,9 +177,14 @@ public class Sistema {
         return 0;
     }
     public int cadastraFuncionario(Funcionario novoFuncionario) throws SQLException {
+
         if(novoFuncionario == null){
+            //TODO: Tirar isso
+            System.out.println("Funcionario == null");
             return 1;
         }
+        //TODO:Tirar isso
+        System.out.println("Funcionario != null" + novoFuncionario.getNome());
         novoFuncionario.setIdFuncionario(funcionarios.size() + 1);
         funcionarios.add(novoFuncionario);
         banco.cadastrarFuncionario(novoFuncionario,con.getConnection());
@@ -211,7 +225,13 @@ public class Sistema {
     }
 
     public Notificacao procuraNotificacao(int idNotificacao){
-        for(Notificacao n : notificacoes){
+        List<Notificacao> notificacoes2 = null;
+        try{
+            notificacoes2 = getNotificacoes();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        for(Notificacao n : notificacoes2){
             if(n.getIdNotificao() == idNotificacao){
                 return n;
             }
@@ -221,7 +241,14 @@ public class Sistema {
 
 
     public Produto procuraProduto(int idProduto){
-        for(Produto p : produtos){
+        List<Produto> produtos2 = null;
+        try {
+            produtos2 = getProdutos();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        for(Produto p : produtos2){
             if(p.getIdProduto() == idProduto){
                 return p;
             }
@@ -238,14 +265,9 @@ public class Sistema {
         return null;
     }
 
-    public int deletarCliente(int idCliente){
-        Cliente c = procuraCliente(idCliente);
-        if(c != null){
-            clientes.remove(c);
-            return 0;
-        }
-
-        return 1;
+    public int deletarCliente(int idCliente) throws  SQLException{
+        banco.deletaCliente(idCliente,con.getConnection());
+        return 0;
     }
 
     public Veiculo procuraVeiculo(int idVeiculo){
@@ -257,14 +279,9 @@ public class Sistema {
         return null;
     }
 
-    public int deletarVeiculo(int idVeiculo){
-        Veiculo v = procuraVeiculo(idVeiculo);
-        if(v != null){
-            veiculos.remove(v);
-            return 0;
-        }
-
-        return 1;
+    public int deletarVeiculo(int idVeiculo) throws SQLException{
+        banco.deletaVeiculo(idVeiculo,con.getConnection());
+        return  0;
     }
 
     public PedidoPersonalizacao procurarPedidoPersonalizacao(int idPedido){
@@ -276,14 +293,9 @@ public class Sistema {
         return null;
     }
 
-    public int deletarPedidoPersonalizacao(int idPedido){
-        PedidoPersonalizacao pp = procurarPedidoPersonalizacao(idPedido);
-        if(pp != null){
-            veiculos.remove(pp);
-            return 0;
-        }
-
-        return 1;
+    public int deletarPedidoPersonalizacao(int idPedido) throws SQLException{
+        banco.deletaPedidoPersonalizacao(idPedido,con.getConnection());
+        return 0;
     }
 
     public Funcionario procurarFuncionario(int idFuncionario){
@@ -295,7 +307,7 @@ public class Sistema {
         return null;
     }
 
-    
+
     public int deletarFuncionario(int idFuncionario) throws SQLException{
        banco.deletaFuncionario(idFuncionario,con.getConnection());
         return 0;
@@ -358,8 +370,16 @@ public class Sistema {
     }
 
     public int deletarPedidoCompra(int idPedidoCompra) throws SQLException{
-        banco.deletaProduto(idPedidoCompra,con.getConnection());
+        banco.deletarPedidoCompra(idPedidoCompra,con.getConnection());
         return 0;
+    }
+
+    public double getTotalCompras()throws SQLException{
+        return  banco.totalPedidosCompra(con.getConnection());
+    }
+
+    public double getTotalVendas()throws SQLException{
+        return  banco.totalPedidiosPersonalizacao(con.getConnection());
     }
 
 }

@@ -518,10 +518,10 @@ public class Banco {
             st = con.prepareStatement("DELETE FROM produto WHERE idProduto = ?");
             st.setInt(1, idProduto);
             st.executeUpdate();
-            con.commit();
+            //con.commit();
 
         } catch (SQLException e) {
-            con.rollback();
+            //con.rollback();
             throw e;
         } finally {
             if (st != null) {
@@ -538,10 +538,10 @@ public class Banco {
             st = con.prepareStatement("DELETE FROM departamento WHERE idDep = ?");
             st.setInt(1, idDepartamento);
             st.executeUpdate();
-            con.commit();
+            //con.commit();
 
         } catch (SQLException e) {
-            con.rollback();
+            //con.rollback();
             throw e;
         } finally {
             if (st != null) {
@@ -561,11 +561,11 @@ public class Banco {
 
             st.executeUpdate();
 
-            con.commit();
+            //con.commit();
 
         } catch (SQLException e) {
 
-            con.rollback();
+            //con.rollback();
             throw e;
         } finally {
 
@@ -586,11 +586,11 @@ public class Banco {
 
             st.executeUpdate();
 
-            con.commit();
+            //con.commit();
 
         } catch (SQLException e) {
 
-            con.rollback();
+            //con.rollback();
             throw e;
         } finally {
 
@@ -607,11 +607,11 @@ public class Banco {
             st = con.prepareStatement("DELETE FROM funcionario WHERE idFuncionario = ?");
             st.setInt(1, idFuncionario);
             st.executeUpdate();
-            con.commit();
+            //con.commit();
 
         } catch (SQLException e) {
             // Em caso de erro, fazemos rollback da transação
-            con.rollback();
+            //con.rollback();
             throw e;
         } finally {
             // Fechamos os recursos
@@ -628,10 +628,10 @@ public class Banco {
             st = con.prepareStatement("DELETE FROM notificacao WHERE idNotificacao = ?");
             st.setInt(1, idNotificacao);
             st.executeUpdate();
-            con.commit();
+            //con.commit();
         } catch (SQLException e) {
             // Em caso de erro, fazemos rollback da transação
-            con.rollback();
+            //con.rollback();
             throw e;
         } finally {
             // Fechamos os recursos
@@ -641,7 +641,7 @@ public class Banco {
         }
     }
 
-    public void deletaPedidoCompra(int idPedidoCompra, Connection con) throws SQLException {
+    public void deletarPedidoCompra(int idPedidoCompra, Connection con) throws SQLException {
         PreparedStatement st = null;
 
         try {
@@ -649,10 +649,10 @@ public class Banco {
 
             st.setInt(1, idPedidoCompra);
             st.executeUpdate();
-            con.commit();
+            //con.commit();
 
         } catch (SQLException e) {
-            con.rollback();
+            ////con.rollback();
             throw e;
         } finally {
             if (st != null) {
@@ -668,10 +668,10 @@ public class Banco {
             st = con.prepareStatement("DELETE FROM pedidoPersonalizacao WHERE idPedido = ?");
             st.setInt(1, idPedido);
             st.executeUpdate();
-            con.commit();
+            //con.commit();
 
         } catch (SQLException e) {
-            con.rollback();
+            //con.rollback();
             throw e;
         } finally {
             if (st != null) {
@@ -687,10 +687,10 @@ public class Banco {
             st = con.prepareStatement("DELETE FROM veiculo WHERE idVeiculo = ?");
             st.setInt(1, idVeiculo);
             st.executeUpdate();
-            con.commit();
+            //con.commit();
 
         } catch (SQLException e) {
-            con.rollback();
+            //con.rollback();
             throw e;
         } finally {
             if (st != null) {
@@ -699,7 +699,55 @@ public class Banco {
         }
     }
 
+    public double totalPedidosCompra(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
 
+        double total = 0;
+
+        try {
+            st = con.prepareStatement("SELECT SUM(totalCompra) AS total FROM pedidoCompra");
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getDouble("total");
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return total;
+    }
+
+    public double totalPedidiosPersonalizacao(Connection con) throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        double total = 0;
+
+        try {
+            st = con.prepareStatement("SELECT SUM(valorpersonalizacao) AS total FROM pedidopersonalizacao");
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getDouble("total");
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return total;
+    }
 
 
 

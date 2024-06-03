@@ -7,11 +7,8 @@ public class PedidoCompra {
 
     private int idNotificacao;
     private int quantidade;
-
-    private double totalCompra;
-
     private int idProduto;
-
+    private double totalCompra;
     private boolean entregue;
 
     public boolean isEntregue() {

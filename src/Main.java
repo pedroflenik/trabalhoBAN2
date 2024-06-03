@@ -894,7 +894,12 @@ public class Main {
         mostraClientes();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarCliente(escolha);
+        try {
+            sistema.deletarCliente(escolha);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public static void deletarVeiculo(){
@@ -903,7 +908,12 @@ public class Main {
         mostraVeiculos();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarVeiculo(escolha);
+        try {
+            sistema.deletarVeiculo(escolha);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public static void deletarPedidoPersonalizacao(){
@@ -912,7 +922,12 @@ public class Main {
         mostraPedidosPersonalizacao();
         escolha = scan.nextInt();
         scan.nextLine();
-        sistema.deletarPedidoPersonalizacao(escolha);
+        try {
+            sistema.deletarPedidoPersonalizacao(escolha);
+        }catch (Exception e){
+           System.out.println(e.getMessage());
+        }
+
     }
 
     public static void deletarFuncionario() {
