@@ -55,7 +55,9 @@ public class Sistema {
     }
 
     public List<Produto> getProdutos() throws SQLException {
+        banco.atualizaNotificacoes(con.getConnection());
         return banco.selectProdutos(con.getConnection());
+
     }
 
     public void setProdutos(List<Produto> produtos) {
@@ -159,7 +161,7 @@ public class Sistema {
 
         pedidosCompra.add(novoPedidoCompra);
         banco.cadastrarPedidoCompra(novoPedidoCompra, con.getConnection());
-        banco.deletaNotificacao(notificacaoAssociada.getIdNotificao(),con.getConnection());
+        //banco.deletaNotificacao(notificacaoAssociada.getIdNotificao(),con.getConnection());
         return 0;
     }
 

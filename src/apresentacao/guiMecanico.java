@@ -350,6 +350,7 @@ public class guiMecanico {
                     JOptionPane.showMessageDialog(frame, "Pedido de personalização cadastrado", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
                     JOptionPane.showMessageDialog(frame, "Falha ao cadastrar pedido de personalização", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }

@@ -118,6 +118,7 @@ public class Banco {
                 st.close();
             }
         }
+        //removeQuantidadeEstoque(con);
     }
 
     public void cadastrarProduto(Produto produto, Connection con) throws SQLException {
@@ -761,6 +762,26 @@ public class Banco {
             stmt.setInt(1, idPedido);
 
             // Executar a instrução SQL
+            stmt.execute();
+        }
+
+    }
+
+    public void removeQuantidadeEstoque(Connection con) throws SQLException {
+        // Preparar a chamada da função PL/pgSQL usando uma instrução SQL simples
+        //String sql = "SELECT remover_quantidade_estoque_pedido_personalizacao()";
+        /*
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.execute();
+        }
+
+         */
+    }
+
+    public void atualizaNotificacoes(Connection con) throws SQLException {
+        // Preparar a chamada da função PL/pgSQL usando uma instrução SQL simples
+        String sql = "SELECT atualizar_estoque_e_notificar()";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.execute();
         }
     }
