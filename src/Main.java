@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
 import logico.*;
-
+import apresentacao.gui;
 public class Main {
     private static Scanner scan = new Scanner(System.in);
     private static Sistema sistema = new Sistema();
@@ -1010,7 +1010,10 @@ public class Main {
 
     //********************************************************************
     //TODO: Precisa adicionar a possibilidade de deletar as coisas
+
+
     public static void main(String[] args) {
-        mostraMenuInicial();
+       gui gui = new gui();
+       gui.menuInicial(args);
     }
 }
