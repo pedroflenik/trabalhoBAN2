@@ -9,6 +9,24 @@ public class PedidoPersonalizacao
     private double valorPersonalizacao;
     private int idVeiculo;
     private int departamentoResponsavel;
+    private int quantidade;
+    private int idProduto;
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public int getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
+    }
 
     public int getIdPedido() {
         return idPedido;

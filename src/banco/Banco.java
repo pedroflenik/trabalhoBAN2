@@ -104,12 +104,14 @@ public class Banco {
     public void cadastrarPedidoPersonalizacao(PedidoPersonalizacao pedido, Connection con) throws SQLException {
         PreparedStatement st = null;
         try {
-            st = con.prepareStatement("INSERT INTO pedidoPersonalizacao (dataEntrega,  descricao, valorPersonalizacao, idVeiculo, departamentoResponsavel) VALUES (?, ?, ?, ?, ?)");
+            st = con.prepareStatement("INSERT INTO pedidoPersonalizacao (dataEntrega,  descricao, valorPersonalizacao, idVeiculo, departamentoResponsavel,quantidadeProduto,idProduto) VALUES (?, ?, ?, ?, ?,?,?)");
             st.setDate(1, Date.valueOf(pedido.getDataEntrega()));
             st.setString(2, pedido.getDescricao());
             st.setDouble(3, pedido.getValorPersonalizacao());
             st.setInt(4, pedido.getIdVeiculo());
             st.setInt(5, pedido.getDepartamentoResponsavel());
+            st.setInt(6, pedido.getQuantidade());
+            st.setInt(7, pedido.getIdProduto());
             st.executeUpdate();
         } finally {
             if (st != null) {
@@ -403,6 +405,8 @@ public class Banco {
                 pedido.setValorPersonalizacao(rs.getDouble("valorPersonalizacao"));
                 pedido.setIdVeiculo(rs.getInt("idVeiculo"));
                 pedido.setDepartamentoResponsavel(rs.getInt("departamentoResponsavel"));
+                pedido.setQuantidade(rs.getInt("quantidadeProduto"));
+                pedido.setIdProduto(rs.getInt("idProduto"));
                 pedidosPersonalizacao.add(pedido);
             }
         } finally {

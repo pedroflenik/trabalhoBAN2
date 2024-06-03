@@ -58,13 +58,11 @@ public class guiMecanico {
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        // Painel de cadastro de cliente
         JPanel cadastroClientePanel = new JPanel(new BorderLayout());
 
         JPanel formularioClientePanel = new JPanel(new GridLayout(3, 2));
         formularioClientePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Adiciona os campos do formulário de cliente
         formularioClientePanel.add(new JLabel("Nome:"));
         JTextField nomeTextField = new JTextField();
         formularioClientePanel.add(nomeTextField);
@@ -84,7 +82,6 @@ public class guiMecanico {
                 String cpf = cpfTextField.getText();
                 String telefone = telefoneTextField.getText();
 
-                // Crie um objeto Cliente com os dados recuperados
                 Cliente novoCliente = new Cliente();
                 novoCliente.setNome(nome);
                 novoCliente.setCpf(cpf);
@@ -97,30 +94,26 @@ public class guiMecanico {
 
                 try {
                     sistema.cadastraCliente(novoCliente);
-                    JOptionPane.showMessageDialog(frame, "Cliente cadastrado", "SUCESSO",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Cliente cadastrado", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                     return;
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, "Falha ao cadastrar cliente", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
         });
 
-        // Cria o painel de botões para o formulário de cliente
-        JPanel botoesClientePanel = criarBotoesPanel(frameAnterior,frame,formularioClientePanel);
+        JPanel botoesClientePanel = criarBotoesPanel(frameAnterior, frame, formularioClientePanel);
 
-        // Adiciona o botão cadastrar cliente e o formulário ao painel de cadastro de cliente
         cadastroClientePanel.add(cadastrarClienteButton, BorderLayout.NORTH);
         cadastroClientePanel.add(formularioClientePanel, BorderLayout.CENTER);
         cadastroClientePanel.add(botoesClientePanel, BorderLayout.SOUTH);
 
-        // Painel de cadastro de veículo
         JPanel cadastroVeiculoPanel = new JPanel(new BorderLayout());
 
         JPanel formularioVeiculoPanel = new JPanel(new GridLayout(4, 2));
         formularioVeiculoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Adiciona os campos do formulário de veículo
         formularioVeiculoPanel.add(new JLabel("Modelo:"));
         JTextField modeloTxt = new JTextField();
         formularioVeiculoPanel.add(modeloTxt);
@@ -131,30 +124,27 @@ public class guiMecanico {
         JTextField anoTxt = new JTextField();
         formularioVeiculoPanel.add(anoTxt);
 
-        // Adiciona o campo extra "Dono" como um JComboBox
         formularioVeiculoPanel.add(new JLabel("Dono:"));
         JComboBox<String> donoComboBox = new JComboBox<>();
-        // Aqui você pode adicionar os donos disponíveis ao JComboBox
         List<Cliente> clientes = null;
         try {
             clientes = sistema.getClientes();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("ERRO: No getClientes " + ex.getMessage());
         }
-        if(clientes != null){
+        if (clientes != null) {
             donoComboBox.addItem("--- Escolher ---");
-            for(Cliente c: clientes){
+            for (Cliente c : clientes) {
                 donoComboBox.addItem(c.getIdCliente() + " - " + c.getNome() + " - " + c.getCpf());
             }
             clientes.clear();
-        }else{
+        } else {
             donoComboBox.addItem("Vazio");
         }
 
 
         formularioVeiculoPanel.add(donoComboBox);
 
-        // Cria o botão cadastrar veículo
         JButton cadastrarVeiculoButton = new JButton("Cadastrar Veículo");
 
         cadastrarVeiculoButton.addActionListener(new ActionListener() {
@@ -162,15 +152,14 @@ public class guiMecanico {
             public void actionPerformed(ActionEvent e) {
 
                 String textoComboBox = (String) donoComboBox.getSelectedItem();
-                if(textoComboBox == "Vazio"){
+                if (textoComboBox == "Vazio") {
                     JOptionPane.showMessageDialog(frame, "Cadastre um cliente primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
-                }else if(textoComboBox == "--- Escolher ---"){
+                } else if (textoComboBox == "--- Escolher ---") {
                     JOptionPane.showMessageDialog(frame, "Escolha um dono para o veículo!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                // Recupera os dados do formulário
                 String modelo = modeloTxt.getText();
                 String marca = marcaTxt.getText();
                 String ano = anoTxt.getText();
@@ -182,7 +171,6 @@ public class guiMecanico {
                     return;
                 }
 
-                // Crie um objeto Cliente com os dados recuperados
                 Veiculo novoVeiculo = new Veiculo();
                 novoVeiculo.setModelo(modelo);
                 novoVeiculo.setMarca(marca);
@@ -190,31 +178,27 @@ public class guiMecanico {
                 novoVeiculo.setIdDono(idDono);
 
 
-
                 try {
                     sistema.cadastrarVeiculo(novoVeiculo);
-                    JOptionPane.showMessageDialog(frame, "Veiculo cadastrado", "SUCESSO",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Veiculo cadastrado", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                     return;
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, "Falha ao cadastrar veiculo", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
         });
 
-        // Cria o painel de botões para o formulário de veículo
-        JPanel botoesVeiculoPanel = criarBotoesPanel(frameAnterior,frame,formularioVeiculoPanel);
+        JPanel botoesVeiculoPanel = criarBotoesPanel(frameAnterior, frame, formularioVeiculoPanel);
 
-        // Adiciona o botão cadastrar veículo e o formulário ao painel de cadastro de veículo
         cadastroVeiculoPanel.add(cadastrarVeiculoButton, BorderLayout.NORTH);
         cadastroVeiculoPanel.add(formularioVeiculoPanel, BorderLayout.CENTER);
         cadastroVeiculoPanel.add(botoesVeiculoPanel, BorderLayout.SOUTH);
 
 
-        //Painel pedido de personalização
         JPanel cadastroPedidoPersonalizacaoPanel = new JPanel(new BorderLayout());
 
-        JPanel formularioPedidoPersonalizacaoPanel = new JPanel(new GridLayout(5, 2));
+        JPanel formularioPedidoPersonalizacaoPanel = new JPanel(new GridLayout(7, 2));
         formularioPedidoPersonalizacaoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 
@@ -225,89 +209,120 @@ public class guiMecanico {
         JTextField descricaoTxt = new JTextField();
         formularioPedidoPersonalizacaoPanel.add(descricaoTxt);
         formularioPedidoPersonalizacaoPanel.add(new JLabel("Valor Personalização:"));
-        SpinnerModel spinnerModel = new SpinnerNumberModel(0.0, 0.0, null, 0.01); // Valor inicial, valor mínimo, valor máximo, passo
+        SpinnerModel spinnerModel = new SpinnerNumberModel(0.0, 0.0, null, 0.01);
         JSpinner valorPersonalizacaoSpiner = new JSpinner(spinnerModel);
         formularioPedidoPersonalizacaoPanel.add(valorPersonalizacaoSpiner);
 
 
-
-        // Adiciona o campo extra "Veículo" como um JComboBox
         formularioPedidoPersonalizacaoPanel.add(new JLabel("Veículo:"));
         JComboBox<String> veiculoComboBox = new JComboBox<>();
-        // Aqui você pode adicionar os veículos disponíveis ao JComboBox
         List<Veiculo> veiculos = null;
         try {
             veiculos = sistema.getVeiculos();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("ERRO: No getVeiculos " + ex.getMessage());
         }
-        if(veiculos != null){
+        if (veiculos != null) {
             veiculoComboBox.addItem("--- Escolher ---");
-            for(Veiculo v: veiculos){
-                veiculoComboBox.addItem(v.getIdVeiculo() + " - Dono: " + v.getIdDono() + " - Modelo: " + v.getModelo() );
+            for (Veiculo v : veiculos) {
+                veiculoComboBox.addItem(v.getIdVeiculo() + " - Dono: " + v.getIdDono() + " - Modelo: " + v.getModelo());
             }
             veiculos.clear();
-        }else{
+        } else {
             veiculoComboBox.addItem("Vazio");
         }
 
         formularioPedidoPersonalizacaoPanel.add(veiculoComboBox);
 
-        // Adiciona o campo extra "Departamento Responsável" como um JComboBox
         formularioPedidoPersonalizacaoPanel.add(new JLabel("Departamento Responsável:"));
         JComboBox<String> departamentoComboBox = new JComboBox<>();
-        // Aqui você pode adicionar os departamentos disponíveis ao JComboBox
 
         List<Departamento> departamentos = null;
         try {
             departamentos = sistema.getDepartamentos();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("ERRO: No getDepartamentos " + ex.getMessage());
         }
-        if(departamentos.size() > 2){
+        if (departamentos.size() > 2) {
             departamentoComboBox.addItem("--- Escolher ---");
-            for(Departamento d: departamentos){
-                if(d.getIdDep() != 1 && d.getIdDep() != 2){
-                    departamentoComboBox.addItem(d.getIdDep() + " - Nome: " + d.getNome() + " - Tipo Veiculo: " + d.getTipoVeiculo() );
+            for (Departamento d : departamentos) {
+                if (d.getIdDep() != 1 && d.getIdDep() != 2) {
+                    departamentoComboBox.addItem(d.getIdDep() + " - Nome: " + d.getNome() + " - Tipo Veiculo: " + d.getTipoVeiculo());
                 }
             }
             departamentos.clear();
-        }else{
+        } else {
             departamentoComboBox.addItem("Vazio");
         }
         formularioPedidoPersonalizacaoPanel.add(departamentoComboBox);
 
-        // Cria o botão cadastrar pedido de personalização
-        JButton cadastrarPedidoDePersonalizacaoButton = new JButton("Cadastrar Pedido de Personalização");
 
+        //
+        formularioPedidoPersonalizacaoPanel.add(new JLabel("Produto:"));
+        JComboBox<String> produtoComboBox = new JComboBox<>();
+
+        List<Produto> produtos = new ArrayList<>();
+        try {
+            produtos = sistema.getProdutos();
+        } catch (Exception ex) {
+            System.out.println("ERRO: No getDepartamentos " + ex.getMessage());
+        }
+        if (produtos.size() > 2) {
+            produtoComboBox.addItem("--- Escolher ---");
+            for (Produto p : produtos) {
+                produtoComboBox.addItem(p.getIdProduto() + " - Nome: " + p.getNome() + " - Quantidade em estoque: " + p.getQuantidadeEstoque());
+            }
+            produtos.clear();
+        } else {
+            produtoComboBox.addItem("Vazio");
+        }
+        formularioPedidoPersonalizacaoPanel.add(produtoComboBox);
+
+
+        formularioPedidoPersonalizacaoPanel.add(new JLabel("Quantidade produto:"));
+        SpinnerModel spinnerModel2 = new SpinnerNumberModel(0.0, 0.0, null, 1);
+        JSpinner quantidadeProdutoSpinner = new JSpinner(spinnerModel2);
+        formularioPedidoPersonalizacaoPanel.add(quantidadeProdutoSpinner);
+
+
+        JButton cadastrarPedidoDePersonalizacaoButton = new JButton("Cadastrar Pedido de Personalização");
         cadastrarPedidoDePersonalizacaoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 String textoComboBoxDep = (String) departamentoComboBox.getSelectedItem();
-                if(textoComboBoxDep == "Vazio"){
+                if (textoComboBoxDep == "Vazio") {
                     JOptionPane.showMessageDialog(frame, "Cadastre um departamento primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
-                }else if(textoComboBoxDep == "--- Escolher ---"){
+                } else if (textoComboBoxDep == "--- Escolher ---") {
                     JOptionPane.showMessageDialog(frame, "Escolha um departamento!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 String textoComboBoxVeiculo = (String) veiculoComboBox.getSelectedItem();
-                if(textoComboBoxVeiculo == "Vazio"){
+                if (textoComboBoxVeiculo == "Vazio") {
                     JOptionPane.showMessageDialog(frame, "Cadastre um veículo primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
-                }else if(textoComboBoxVeiculo == "--- Escolher ---"){
+                } else if (textoComboBoxVeiculo == "--- Escolher ---") {
                     JOptionPane.showMessageDialog(frame, "Escolha veículo!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                String textoComboProduto = (String) produtoComboBox.getSelectedItem();
+                if (textoComboProduto == "Vazio") {
+                    JOptionPane.showMessageDialog(frame, "Cadastre um produto primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (textoComboProduto == "--- Escolher ---") {
+                    JOptionPane.showMessageDialog(frame, "Escolha produto!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-                // Recupera os dados do formulário
                 String dataEntrega = dataEntregaTxt.getText();
                 String descricao = descricaoTxt.getText();
                 double valorPersonalizacao = (double) valorPersonalizacaoSpiner.getValue();
-                int idDepartamento =  extrairId((String) departamentoComboBox.getSelectedItem());
+                int idDepartamento = extrairId((String) departamentoComboBox.getSelectedItem());
                 int idVeiculo = extrairId((String) veiculoComboBox.getSelectedItem());
-
+                int idProduto = extrairId((String) produtoComboBox.getSelectedItem());
+                double quantidadeDouble = (double) quantidadeProdutoSpinner.getValue();
+                int quantidade = (int) quantidadeDouble;
 
                 if (dataEntrega.isEmpty() || descricao.isEmpty() || valorPersonalizacao == 0) {
                     JOptionPane.showMessageDialog(frame, "Por favor, preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -322,19 +337,19 @@ public class guiMecanico {
                     return; // Sai do método se a data estiver em um formato inválido
                 }
 
-                // Crie um objeto Cliente com os dados recuperados
                 PedidoPersonalizacao novoPedidoPersonalizacao = new PedidoPersonalizacao();
                 novoPedidoPersonalizacao.setDataEntrega(dataEntregad);
                 novoPedidoPersonalizacao.setDescricao(descricao);
                 novoPedidoPersonalizacao.setDepartamentoResponsavel(idDepartamento);
                 novoPedidoPersonalizacao.setValorPersonalizacao(valorPersonalizacao);
                 novoPedidoPersonalizacao.setIdVeiculo(idVeiculo);
-
+                novoPedidoPersonalizacao.setQuantidade(quantidade);
+                novoPedidoPersonalizacao.setIdProduto(idProduto);
                 try {
                     sistema.cadastrarPedidoPersonalizacao(novoPedidoPersonalizacao);
-                    JOptionPane.showMessageDialog(frame, "Pedido de personalização cadastrado", "SUCESSO",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Pedido de personalização cadastrado", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                     return;
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, "Falha ao cadastrar pedido de personalização", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -342,87 +357,83 @@ public class guiMecanico {
         });
 
 
-        // Cria o painel de botões para o formulário de pedido de personalização
-        JPanel botoesPedidoPersonalizacaoPanel = criarBotoesPanel(frameAnterior,frame,formularioPedidoPersonalizacaoPanel);
+        JPanel botoesPedidoPersonalizacaoPanel = criarBotoesPanel(frameAnterior, frame, formularioPedidoPersonalizacaoPanel);
 
-        // Adiciona o botão cadastrar pedido de personalização e o formulário ao painel de cadastro de pedido de personalização
         cadastroPedidoPersonalizacaoPanel.add(cadastrarPedidoDePersonalizacaoButton, BorderLayout.NORTH);
         cadastroPedidoPersonalizacaoPanel.add(formularioPedidoPersonalizacaoPanel, BorderLayout.CENTER);
         cadastroPedidoPersonalizacaoPanel.add(botoesPedidoPersonalizacaoPanel, BorderLayout.SOUTH);
 
-        // Adiciona as abas ao JTabbedPane
         tabbedPane.addTab("Cadastro de Cliente", cadastroClientePanel);
         tabbedPane.addTab("Cadastro de Veículo", cadastroVeiculoPanel);
         tabbedPane.addTab("Cadastro de Pedido de Personalização", cadastroPedidoPersonalizacaoPanel);
 
-        // Adiciona um ChangeListener para o JTabbedPane
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                // Obtém o índice da aba atualmente selecionada
                 int selectedIndex = tabbedPane.getSelectedIndex();
-                // Aqui você pode adicionar ação com base na aba selecionada
                 if (selectedIndex == 0) {
+                    frame.setSize(600, 300);
                     frame.setTitle("Cadastro de Cliente");
                 } else if (selectedIndex == 1) {
+                    frame.setSize(600, 300);
                     frame.setTitle("Cadastro de Veículo");
                     donoComboBox.removeAllItems();
                     List<Cliente> clientes = null;
                     try {
                         clientes = sistema.getClientes();
-                    }catch (Exception ex){
+                    } catch (Exception ex) {
                         System.out.println("ERRO: No getClientes " + ex.getMessage());
                     }
-                    if(clientes != null){
+                    if (clientes != null) {
                         donoComboBox.addItem("--- Escolher ---");
-                        for(Cliente c: clientes){
+                        for (Cliente c : clientes) {
                             donoComboBox.addItem(c.getIdCliente() + " - " + c.getNome() + " - " + c.getCpf());
                         }
                         clientes.clear();
-                    }else{
+                    } else {
                         donoComboBox.addItem("Vazio");
                     }
                 } else if (selectedIndex == 2) {
+                    frame.setSize(600, 350);
                     frame.setTitle("Cadastro de Pedido de Personalização");
                     departamentoComboBox.removeAllItems();
                     List<Departamento> departamentos = null;
                     try {
                         departamentos = sistema.getDepartamentos();
-                    }catch (Exception ex){
+                    } catch (Exception ex) {
                         System.out.println("ERRO: No getDepartamentos " + ex.getMessage());
                     }
-                    if(departamentos.size() > 2){
+                    if (departamentos.size() > 2) {
                         departamentoComboBox.addItem("--- Escolher ---");
-                        for(Departamento d: departamentos){
-                            if(d.getIdDep() != 1 && d.getIdDep() != 2){
-                                departamentoComboBox.addItem(d.getIdDep() + " - Nome: " + d.getNome() + " - Tipo Veiculo: " + d.getTipoVeiculo() );
+                        for (Departamento d : departamentos) {
+                            if (d.getIdDep() != 1 && d.getIdDep() != 2) {
+                                departamentoComboBox.addItem(d.getIdDep() + " - Nome: " + d.getNome() + " - Tipo Veiculo: " + d.getTipoVeiculo());
                             }
                         }
                         departamentos.clear();
-                    }else{
+                    } else {
                         departamentoComboBox.addItem("Vazio");
                     }
                     veiculoComboBox.removeAllItems();
                     List<Veiculo> veiculos = null;
                     try {
                         veiculos = sistema.getVeiculos();
-                    }catch (Exception ex){
+                    } catch (Exception ex) {
                         System.out.println("ERRO: No getVeiculos " + ex.getMessage());
                     }
-                    if(veiculos != null){
+                    if (veiculos != null) {
                         veiculoComboBox.addItem("--- Escolher ---");
-                        for(Veiculo v: veiculos){
-                            veiculoComboBox.addItem(v.getIdVeiculo() + " - Dono: " + v.getIdDono() + " - Modelo: " + v.getModelo() );
+                        for (Veiculo v : veiculos) {
+                            veiculoComboBox.addItem(v.getIdVeiculo() + " - Dono: " + v.getIdDono() + " - Modelo: " + v.getModelo());
                         }
                         veiculos.clear();
-                    }else{
+                    } else {
                         veiculoComboBox.addItem("Vazio");
                     }
                 }
             }
         });
 
-        // Adiciona o JTabbedPane ao JFrame
         frame.add(tabbedPane);
         frame.setSize(600, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -765,18 +776,17 @@ public class guiMecanico {
         panel3.setLayout(new BorderLayout());
 
         // Criar as colunas
-        String[] colunasPedidosPesonalizacao = {"ID", "dataEntrega", "descricao", "valor Personalização","id veiculo","departamento responsável"};
+        String[] colunasPedidosPesonalizacao = {"ID", "dataEntrega", "descricao", "valor Personalização", "id veiculo", "departamento responsável", "Quantidade produto","Id produto"};
 
         List<PedidoPersonalizacao> pedidosPersonalizacao = new ArrayList<>();
 
         try {
             pedidosPersonalizacao = sistema.getPerdidosPersonalizacao();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        // Criar os dados
-        Object[][] dadosPedidosPersonalizacao = new Object[pedidosPersonalizacao.size()][6];
+        Object[][] dadosPedidosPersonalizacao = new Object[pedidosPersonalizacao.size()][8];
         for (int i = 0; i < pedidosPersonalizacao.size(); i++) {
             PedidoPersonalizacao pedido = pedidosPersonalizacao.get(i);
             dadosPedidosPersonalizacao[i][0] = pedido.getIdPedido();
@@ -785,6 +795,8 @@ public class guiMecanico {
             dadosPedidosPersonalizacao[i][3] = pedido.getValorPersonalizacao();
             dadosPedidosPersonalizacao[i][4] = pedido.getIdVeiculo();
             dadosPedidosPersonalizacao[i][5] = pedido.getDepartamentoResponsavel();
+            dadosPedidosPersonalizacao[i][6] = pedido.getQuantidade();
+            dadosPedidosPersonalizacao[i][7] = pedido.getIdProduto();
         }
 
         // Criar a tabela
@@ -909,7 +921,6 @@ public class guiMecanico {
 
     public static void menuMecanico(Frame frameAnterior) {
         // Cria uma janela Swing
-        //TODO:Mudar titulo;
         JFrame frame = new JFrame("Menu Mecanico");
 
         // Define o layout da janela como BorderLayout

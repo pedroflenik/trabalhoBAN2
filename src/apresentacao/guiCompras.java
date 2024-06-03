@@ -458,18 +458,17 @@ public class guiCompras {
         panel3.setLayout(new BorderLayout());
 
         // Criar as colunas
-        String[] colunasPedidosPesonalizacao = {"ID", "dataEntrega", "descricao", "valor Personalização","id veiculo","departamento responsável"};
+        String[] colunasPedidosPesonalizacao = {"ID", "dataEntrega", "descricao", "valor Personalização", "id veiculo", "departamento responsável", "Quantidade produto","Id produto"};
 
         List<PedidoPersonalizacao> pedidosPersonalizacao = new ArrayList<>();
 
         try {
             pedidosPersonalizacao = sistema.getPerdidosPersonalizacao();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        // Criar os dados
-        Object[][] dadosPedidosPersonalizacao = new Object[pedidosPersonalizacao.size()][6];
+        Object[][] dadosPedidosPersonalizacao = new Object[pedidosPersonalizacao.size()][8];
         for (int i = 0; i < pedidosPersonalizacao.size(); i++) {
             PedidoPersonalizacao pedido = pedidosPersonalizacao.get(i);
             dadosPedidosPersonalizacao[i][0] = pedido.getIdPedido();
@@ -478,6 +477,8 @@ public class guiCompras {
             dadosPedidosPersonalizacao[i][3] = pedido.getValorPersonalizacao();
             dadosPedidosPersonalizacao[i][4] = pedido.getIdVeiculo();
             dadosPedidosPersonalizacao[i][5] = pedido.getDepartamentoResponsavel();
+            dadosPedidosPersonalizacao[i][6] = pedido.getQuantidade();
+            dadosPedidosPersonalizacao[i][7] = pedido.getIdProduto();
         }
 
         // Criar a tabela

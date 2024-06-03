@@ -1009,7 +1009,7 @@ public class Main {
     }
 
     //********************************************************************
-    //TODO: Precisa adicionar a possibilidade de deletar as coisas
+
 
 
     public static void main(String[] args) {

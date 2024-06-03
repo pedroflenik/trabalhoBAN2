@@ -1107,7 +1107,7 @@ public class guiDono {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BorderLayout());
 
-        String[] colunasPedidosPesonalizacao = {"ID", "dataEntrega", "descricao", "valor Personalização", "id veiculo", "departamento responsável"};
+        String[] colunasPedidosPesonalizacao = {"ID", "dataEntrega", "descricao", "valor Personalização", "id veiculo", "departamento responsável", "Quantidade produto","Id produto"};
 
         List<PedidoPersonalizacao> pedidosPersonalizacao = new ArrayList<>();
 
@@ -1117,7 +1117,7 @@ public class guiDono {
             System.out.println(e.getMessage());
         }
 
-        Object[][] dadosPedidosPersonalizacao = new Object[pedidosPersonalizacao.size()][6];
+        Object[][] dadosPedidosPersonalizacao = new Object[pedidosPersonalizacao.size()][8];
         for (int i = 0; i < pedidosPersonalizacao.size(); i++) {
             PedidoPersonalizacao pedido = pedidosPersonalizacao.get(i);
             dadosPedidosPersonalizacao[i][0] = pedido.getIdPedido();
@@ -1126,6 +1126,8 @@ public class guiDono {
             dadosPedidosPersonalizacao[i][3] = pedido.getValorPersonalizacao();
             dadosPedidosPersonalizacao[i][4] = pedido.getIdVeiculo();
             dadosPedidosPersonalizacao[i][5] = pedido.getDepartamentoResponsavel();
+            dadosPedidosPersonalizacao[i][6] = pedido.getQuantidade();
+            dadosPedidosPersonalizacao[i][7] = pedido.getIdProduto();
         }
 
         JTable table3 = new JTable(dadosPedidosPersonalizacao, colunasPedidosPesonalizacao);
@@ -1159,7 +1161,7 @@ public class guiDono {
                     frame.setSize(600, 400);
                 } else if (selectedIndex == 2) {
                     frame.setTitle("Consulta Pedidos Personalização");
-                    frame.setSize(600, 400);
+                    frame.setSize(1000, 400);
                 }
             }
         });
@@ -2014,7 +2016,7 @@ public class guiDono {
 
         JPanel cadastroPedidoPersonalizacaoPanel = new JPanel(new BorderLayout());
 
-        JPanel formularioPedidoPersonalizacaoPanel = new JPanel(new GridLayout(5, 2));
+        JPanel formularioPedidoPersonalizacaoPanel = new JPanel(new GridLayout(7, 2));
         formularioPedidoPersonalizacaoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 
@@ -2072,8 +2074,36 @@ public class guiDono {
         }
         formularioPedidoPersonalizacaoPanel.add(departamentoComboBox);
 
-        JButton cadastrarPedidoDePersonalizacaoButton = new JButton("Cadastrar Pedido de Personalização");
 
+        //
+        formularioPedidoPersonalizacaoPanel.add(new JLabel("Produto:"));
+        JComboBox<String> produtoComboBox = new JComboBox<>();
+
+        List<Produto> produtos = new ArrayList<>();
+        try {
+            produtos = sistema.getProdutos();
+        } catch (Exception ex) {
+            System.out.println("ERRO: No getDepartamentos " + ex.getMessage());
+        }
+        if (produtos.size() > 2) {
+            produtoComboBox.addItem("--- Escolher ---");
+            for (Produto p : produtos) {
+                produtoComboBox.addItem(p.getIdProduto() + " - Nome: " + p.getNome() + " - Quantidade em estoque: " + p.getQuantidadeEstoque());
+            }
+            produtos.clear();
+        } else {
+            produtoComboBox.addItem("Vazio");
+        }
+        formularioPedidoPersonalizacaoPanel.add(produtoComboBox);
+
+
+        formularioPedidoPersonalizacaoPanel.add(new JLabel("Quantidade produto:"));
+        SpinnerModel spinnerModel2 = new SpinnerNumberModel(0.0, 0.0, null, 1);
+        JSpinner quantidadeProdutoSpinner = new JSpinner(spinnerModel2);
+        formularioPedidoPersonalizacaoPanel.add(quantidadeProdutoSpinner);
+
+
+        JButton cadastrarPedidoDePersonalizacaoButton = new JButton("Cadastrar Pedido de Personalização");
         cadastrarPedidoDePersonalizacaoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -2094,13 +2124,23 @@ public class guiDono {
                     JOptionPane.showMessageDialog(frame, "Escolha veículo!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                String textoComboProduto = (String) produtoComboBox.getSelectedItem();
+                if (textoComboProduto == "Vazio") {
+                    JOptionPane.showMessageDialog(frame, "Cadastre um produto primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (textoComboProduto == "--- Escolher ---") {
+                    JOptionPane.showMessageDialog(frame, "Escolha produto!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 String dataEntrega = dataEntregaTxt.getText();
                 String descricao = descricaoTxt.getText();
                 double valorPersonalizacao = (double) valorPersonalizacaoSpiner.getValue();
                 int idDepartamento = extrairId((String) departamentoComboBox.getSelectedItem());
                 int idVeiculo = extrairId((String) veiculoComboBox.getSelectedItem());
-
+                int idProduto = extrairId((String) produtoComboBox.getSelectedItem());
+                double quantidadeDouble = (double) quantidadeProdutoSpinner.getValue();
+                int quantidade = (int) quantidadeDouble;
 
                 if (dataEntrega.isEmpty() || descricao.isEmpty() || valorPersonalizacao == 0) {
                     JOptionPane.showMessageDialog(frame, "Por favor, preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -2121,7 +2161,8 @@ public class guiDono {
                 novoPedidoPersonalizacao.setDepartamentoResponsavel(idDepartamento);
                 novoPedidoPersonalizacao.setValorPersonalizacao(valorPersonalizacao);
                 novoPedidoPersonalizacao.setIdVeiculo(idVeiculo);
-
+                novoPedidoPersonalizacao.setQuantidade(quantidade);
+                novoPedidoPersonalizacao.setIdProduto(idProduto);
                 try {
                     sistema.cadastrarPedidoPersonalizacao(novoPedidoPersonalizacao);
                     JOptionPane.showMessageDialog(frame, "Pedido de personalização cadastrado", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
@@ -2149,8 +2190,10 @@ public class guiDono {
             public void stateChanged(ChangeEvent e) {
                 int selectedIndex = tabbedPane.getSelectedIndex();
                 if (selectedIndex == 0) {
+                    frame.setSize(600, 300);
                     frame.setTitle("Cadastro de Cliente");
                 } else if (selectedIndex == 1) {
+                    frame.setSize(600, 300);
                     frame.setTitle("Cadastro de Veículo");
                     donoComboBox.removeAllItems();
                     List<Cliente> clientes = null;
@@ -2169,6 +2212,7 @@ public class guiDono {
                         donoComboBox.addItem("Vazio");
                     }
                 } else if (selectedIndex == 2) {
+                    frame.setSize(600, 350);
                     frame.setTitle("Cadastro de Pedido de Personalização");
                     departamentoComboBox.removeAllItems();
                     List<Departamento> departamentos = null;
