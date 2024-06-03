@@ -711,7 +711,7 @@ public class Banco {
         double total = 0;
 
         try {
-            st = con.prepareStatement("SELECT SUM(totalCompra) AS total FROM pedidoCompra");
+            st = con.prepareStatement("SELECT SUM(totalcompra) AS total FROM pedidocompra");
             rs = st.executeQuery();
 
             if (rs.next()) {

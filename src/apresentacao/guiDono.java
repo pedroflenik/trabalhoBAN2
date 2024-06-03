@@ -2083,9 +2083,9 @@ public class guiDono {
         try {
             produtos = sistema.getProdutos();
         } catch (Exception ex) {
-            System.out.println("ERRO: No getDepartamentos " + ex.getMessage());
+            System.out.println("ERRO: No getProdutos " + ex.getMessage());
         }
-        if (produtos.size() > 2) {
+        if (produtos.size() > 0) {
             produtoComboBox.addItem("--- Escolher ---");
             for (Produto p : produtos) {
                 produtoComboBox.addItem(p.getIdProduto() + " - Nome: " + p.getNome() + " - Quantidade em estoque: " + p.getQuantidadeEstoque());
@@ -2431,7 +2431,7 @@ public class guiDono {
     }
 
     public static void menuFinanceiro(Frame frameAnterior){
-        JFrame frame = new JFrame("PROGRAMA");
+        JFrame frame = new JFrame("Financeiro");
 
         // Define o layout da janela como BorderLayout
         frame.setLayout(new BorderLayout());
@@ -2451,8 +2451,8 @@ public class guiDono {
         double saidaValor = 0;
 
         try {
-            entradaValor = sistema.getTotalCompras();
-            saidaValor = sistema.getTotalVendas();
+            entradaValor =sistema.getTotalVendas();
+            saidaValor =  sistema.getTotalCompras();
         }catch (Exception e){
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(frame, "Erro: Cadastre pedidos de compra e personalização", "Erro", JOptionPane.ERROR_MESSAGE);
