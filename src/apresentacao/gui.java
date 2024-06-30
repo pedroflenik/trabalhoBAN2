@@ -93,6 +93,8 @@ public class gui {
                 novoFuncionario.setIdDepartamento(1);
                 try {
                     sistema.cadastraFuncionario(novoFuncionario);
+                    JOptionPane.showMessageDialog(frame, "Funcinario cadastrado", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                    return;
                 }catch (Exception ex){
                     JOptionPane.showMessageDialog(frame, "Falha no cadastro de funcionario", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -181,6 +183,7 @@ public class gui {
                     }
                 }catch (Exception ex){
                     JOptionPane.showMessageDialog(frame, "Falha ao efetuar o login!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    System.out.println(ex.getMessage());
                     return;
                 }
 

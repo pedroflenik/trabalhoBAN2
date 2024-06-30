@@ -1,9 +1,4 @@
 
-    //TODO:Interface gráfica
-    //TODO: Integração com o banco de dados
-    //TODO: Dono deve conseguir consultar dados como por exemplo a receita da empresa.
-    //TODO: Arrumar cadastro funcionario na parte da escolha do setor
-    //TODO: Tenho que fazer a verificação de todas as entradas do programa
 
 
     //TODO: Acho que não precisasamos guardar o idCliente no pedidoDePersonalização, ja que o veiculoJa possui essa informaçãoe é possivel associar as duas tabelas
@@ -17,19 +12,11 @@
             | --- Na hora da criação do banco é importate lembrar de criar o departamento dono com id 0 e departamento compras com id 1
 
 
-    //TODO: Na especificação do tema está escrito:Cada departamento mantém uma lista de componentes a serem
-                                                  utilizados para cada tipo de veículo a ser personalizado'
-                                                  Nao sei como isso poderia ser implementado
-
-
-    //TODO:Especificar tipo do componente/produto
-
     //FIXME: Fiz uma alteração na calsse Produto, adicionei um campo descrição.
         Esse campo deve ser responsavel por fornecer as decrições de peças especificas
         O tipo agora nas peças indica se a peça é especial ou comum.
         Peças especiais tem descrição != null
 
-        //TODO Adicionar inserção de setores inicials ao script de criação do banco
 
 
     Mecanico cria notificacao -> Compras vizualização notificações
@@ -50,8 +37,4 @@
 
 
 
-    //TODO: Acredito que a verificação da quantidade mimima poça ser feita com uma função ou trigger
-    //TODO: Algumas opções de sair deveriam ser voltar
-    //TODO: Tirar menuCadastro
-    //TODO: Implementar integração banco: Consulta
     */

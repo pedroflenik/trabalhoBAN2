@@ -7,9 +7,15 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import logico.*;
 import apresentacao.gui;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class Main {
     private static Scanner scan = new Scanner(System.in);
     private static Sistema sistema = new Sistema();
+
+
+
 
     public static Notificacao  cadastroNotificacao(){
         Notificacao novaNotificao = new Notificacao();
@@ -1013,6 +1019,14 @@ public class Main {
 
 
     public static void main(String[] args) {
+        /*
+        Dependecias:
+            bson-5.1.1.jar
+            mongodb-driver-core-5.1.1.jar
+            mongodb-driver-sync-5.1.1.jar
+            postgresql-42.7.3.jar
+        */
+        
        gui gui = new gui();
        gui.menuInicial(args);
     }

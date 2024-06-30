@@ -1413,8 +1413,6 @@ public class guiDono {
                     JOptionPane.showMessageDialog(frame, "Falha ao cadastrar fornecedor", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
-
             }
         });
 
@@ -2453,6 +2451,8 @@ public class guiDono {
         try {
             entradaValor =sistema.getTotalVendas();
             saidaValor =  sistema.getTotalCompras();
+            System.out.println(entradaValor);
+            System.out.println(saidaValor);
         }catch (Exception e){
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(frame, "Erro: Cadastre pedidos de compra e personalização", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -2544,6 +2544,7 @@ public class guiDono {
                 menuFinanceiro(frame);
             }
         });
+
         botaoVoltar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -2560,7 +2561,6 @@ public class guiDono {
 
         frame.add(painelBotoes, BorderLayout.CENTER);
         frame.setSize(500, 200);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setLocationRelativeTo(null);

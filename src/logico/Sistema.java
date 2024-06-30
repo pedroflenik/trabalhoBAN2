@@ -24,8 +24,8 @@ public class Sistema {
     private Banco banco;
     private Conexao con;
     public Sistema() {
-        this.banco = new Banco();
         this.con = new Conexao();
+        this.banco = new Banco(con);
         this.funcionarios = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.veiculos = new ArrayList<>();
@@ -39,7 +39,7 @@ public class Sistema {
     }
 
     public List<PedidoCompra> getPedidosCompra() throws  SQLException{
-        return  banco.selectPedidoCompra(con.getConnection());
+        return  banco.selectPedidoCompra();
     }
 
     public void setPedidosCompra(List<PedidoCompra> pedidosCompra) {
@@ -47,7 +47,7 @@ public class Sistema {
     }
 
     public List<Notificacao> getNotificacoes() throws  SQLException{
-        return banco.selectNotificacoes(con.getConnection());
+        return banco.selectNotificacoes();
     }
 
     public void setNotificacoes(List<Notificacao> notificacoes) {
@@ -55,8 +55,8 @@ public class Sistema {
     }
 
     public List<Produto> getProdutos() throws SQLException {
-        banco.atualizaNotificacoes(con.getConnection());
-        return banco.selectProdutos(con.getConnection());
+
+        return banco.selectProdutos();
 
     }
 
@@ -65,7 +65,7 @@ public class Sistema {
     }
 
     public List<Fornecedor> getFornecedores() throws  SQLException {
-        return banco.selectFornecedores(con.getConnection()) ;
+        return banco.selectFornecedores() ;
     }
 
     public void setFornecedores(List<Fornecedor> fornecedores) {
@@ -73,7 +73,7 @@ public class Sistema {
     }
 
     public List<Funcionario> getFuncionarios() throws SQLException{
-        return banco.selectFuncionarios(con.getConnection());
+        return banco.selectFuncionarios();
     }
 
     public void setFuncionarios(List<Funcionario> funcionarios) {
@@ -81,7 +81,7 @@ public class Sistema {
     }
 
     public List<Cliente> getClientes() throws SQLException{
-        return banco.selectClientes(con.getConnection());
+        return banco.selectClientes();
     }
 
     public void setClientes(List<Cliente> clientes) {
@@ -89,7 +89,7 @@ public class Sistema {
     }
 
     public List<Veiculo> getVeiculos() throws SQLException{
-        return banco.selectVeiculos(con.getConnection());
+        return banco.selectVeiculos();
     }
 
     public void setVeiculos(List<Veiculo> veiculos) {
@@ -97,11 +97,11 @@ public class Sistema {
     }
 
     public List<Departamento> getDepartamentos() throws  SQLException{
-        return banco.selectDepartamento(con.getConnection());
+        return banco.selectDepartamento();
     }
 
     public int countDepartamentos() throws  SQLException{
-        return banco.countDepartamentos(con.getConnection());
+        return banco.countDepartamentos();
     }
 
     public void setDepartamentos(List<Departamento> departamentos) {
@@ -109,7 +109,7 @@ public class Sistema {
     }
 
     public List<PedidoPersonalizacao> getPerdidosPersonalizacao() throws SQLException{
-        return banco.selectPedidosPersonalizacao(con.getConnection());
+        return banco.selectPedidosPersonalizacao();
     }
 
     public void setPerdidosPersonalizacao(List<PedidoPersonalizacao> perdidosPersonalizacao) {
@@ -119,14 +119,14 @@ public class Sistema {
     public int cadastrarVeiculo(Veiculo novoVeiculo) throws SQLException {
         novoVeiculo.setIdVeiculo(veiculos.size() + 1);
         veiculos.add(novoVeiculo);
-        banco.cadastrarVeiculo(novoVeiculo,con.getConnection());
+        banco.cadastrarVeiculo(novoVeiculo);
         return 0;
     }
 
     public int cadastrarFornecedor(Fornecedor novoFornecedor) throws  SQLException{
         novoFornecedor.setIdFornecedor(fornecedores.size() + 1);
         fornecedores.add(novoFornecedor);
-        banco.cadastrarFornecedor(novoFornecedor,con.getConnection());
+        banco.cadastrarFornecedor(novoFornecedor);
         return 0;
     }
 
@@ -160,7 +160,7 @@ public class Sistema {
         */
 
         pedidosCompra.add(novoPedidoCompra);
-        banco.cadastrarPedidoCompra(novoPedidoCompra, con.getConnection());
+        banco.cadastrarPedidoCompra(novoPedidoCompra);
         //banco.deletaNotificacao(notificacaoAssociada.getIdNotificao(),con.getConnection());
         return 0;
     }
@@ -168,14 +168,14 @@ public class Sistema {
     public int cadastrarNotificacao(Notificacao novaNotificacao) throws  SQLException{
         novaNotificacao.setIdNotificao(notificacoes.size() + 1);
         notificacoes.add(novaNotificacao);
-        banco.cadastrarNotificacao(novaNotificacao, con.getConnection());
+        banco.cadastrarNotificacao(novaNotificacao);
         return 0;
     }
 
     public int cadastrarDepartamento(Departamento novoDepartamento) throws  SQLException{
         novoDepartamento.setIdDep(departamentos.size() + 1);
         departamentos.add(novoDepartamento);
-        banco.cadastrarDepartamento(novoDepartamento,con.getConnection());
+        banco.cadastrarDepartamento(novoDepartamento);
         return 0;
     }
     public int cadastraFuncionario(Funcionario novoFuncionario) throws SQLException {
@@ -189,21 +189,22 @@ public class Sistema {
         System.out.println("Funcionario != null" + novoFuncionario.getNome());
         novoFuncionario.setIdFuncionario(funcionarios.size() + 1);
         funcionarios.add(novoFuncionario);
-        banco.cadastrarFuncionario(novoFuncionario,con.getConnection());
+        banco.cadastrarFuncionario(novoFuncionario);
         return 0;
     }
 
-    public int cadastrarPedidoPersonalizacao(PedidoPersonalizacao novoPedido) throws SQLException{
+    public int cadastrarPedidoPersonalizacao(PedidoPersonalizacao novoPedido) throws Exception{
         novoPedido.setIdPedido(perdidosPersonalizacao.size() + 1);
         perdidosPersonalizacao.add(novoPedido);
-        banco.cadastrarPedidoPersonalizacao(novoPedido,con.getConnection());
+        banco.cadastrarPedidoPersonalizacao(novoPedido);
+        banco.atualizaNotificacoes(novoPedido.getDataEntrega().toString());
         return 0;
     }
 
     public int cadastraCliente(Cliente novoCliente) throws  SQLException{
         novoCliente.setIdCliente(clientes.size() + 1);
         clientes.add(novoCliente);
-        banco.cadastrarCliente(novoCliente,con.getConnection());
+        banco.cadastrarCliente(novoCliente);
         return 0;
     }
 
@@ -211,19 +212,19 @@ public class Sistema {
     public int cadastraFornecedor(Fornecedor novoFornecedor) throws  SQLException{
         novoFornecedor.setIdFornecedor(fornecedores.size() + 1);
         fornecedores.add(novoFornecedor);
-        banco.cadastrarFornecedor(novoFornecedor, con.getConnection());
+        banco.cadastrarFornecedor(novoFornecedor);
         return 0;
     }
 
     public int cadastraProduto(Produto novoProduto) throws  SQLException{
         novoProduto.setIdProduto(produtos.size() + 1);
         produtos.add(novoProduto);
-        banco.cadastrarProduto(novoProduto, con.getConnection());
+        banco.cadastrarProduto(novoProduto);
         return 0;
     }
 
     public Funcionario efetuaLogin(String cpf) throws SQLException{
-        return banco.selectLogin(cpf,con.getConnection());
+        return banco.selectLogin(cpf);
     }
 
     public Notificacao procuraNotificacao(int idNotificacao){
@@ -268,7 +269,7 @@ public class Sistema {
     }
 
     public int deletarCliente(int idCliente) throws  SQLException{
-        banco.deletaCliente(idCliente,con.getConnection());
+        banco.deletaCliente(idCliente);
         return 0;
     }
 
@@ -282,7 +283,7 @@ public class Sistema {
     }
 
     public int deletarVeiculo(int idVeiculo) throws SQLException{
-        banco.deletaVeiculo(idVeiculo,con.getConnection());
+        banco.deletaVeiculo(idVeiculo);
         return  0;
     }
 
@@ -296,7 +297,7 @@ public class Sistema {
     }
 
     public int deletarPedidoPersonalizacao(int idPedido) throws SQLException{
-        banco.deletaPedidoPersonalizacao(idPedido,con.getConnection());
+        banco.deletaPedidoPersonalizacao(idPedido);
         return 0;
     }
 
@@ -311,7 +312,7 @@ public class Sistema {
 
 
     public int deletarFuncionario(int idFuncionario) throws SQLException{
-       banco.deletaFuncionario(idFuncionario,con.getConnection());
+       banco.deletaFuncionario(idFuncionario);
         return 0;
     }
 
@@ -325,7 +326,7 @@ public class Sistema {
     }
 
     public int deletarDepartamento(int idDepartamento) throws SQLException{
-        banco.deletaDepartamento(idDepartamento,con.getConnection());
+        banco.deletaDepartamento(idDepartamento);
         return 0;
     }
 
@@ -339,12 +340,12 @@ public class Sistema {
     }
 
     public int deletarProduto(int idProduto) throws  SQLException{
-        banco.deletaProduto(idProduto,con.getConnection());
+        banco.deletaProduto(idProduto);
         return 0;
     }
 
     public int deletarNotificacao(int idNotificacao) throws  SQLException{
-        banco.deletaNotificacao(idNotificacao,con.getConnection());
+        banco.deletaNotificacao(idNotificacao);
         return 0;
     }
 
@@ -358,7 +359,7 @@ public class Sistema {
     }
 
     public int deletarFornecedor(int idFornecedor) throws  SQLException{
-        banco.deletaFornecedor(idFornecedor,con.getConnection());
+        banco.deletaFornecedor(idFornecedor);
         return 0;
     }
 
@@ -372,20 +373,20 @@ public class Sistema {
     }
 
     public int deletarPedidoCompra(int idPedidoCompra) throws SQLException{
-        banco.deletarPedidoCompra(idPedidoCompra,con.getConnection());
+        banco.deletarPedidoCompra(idPedidoCompra);
         return 0;
     }
 
     public double getTotalCompras()throws SQLException{
-        return  banco.totalPedidosCompra(con.getConnection());
+        return  banco.totalPedidosCompra();
     }
 
     public double getTotalVendas()throws SQLException{
-        return  banco.totalPedidiosPersonalizacao(con.getConnection());
+        return  banco.totalPedidiosPersonalizacao();
     }
 
     public int confirmarEntrega(int idPedido)throws SQLException{
-        banco.confirmarEntrega(idPedido,con.getConnection());
+        banco.confirmarEntrega(idPedido);
         return 0;
     }
 
